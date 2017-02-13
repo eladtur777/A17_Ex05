@@ -39,11 +39,11 @@
     <Compile Include="Board.cs" />
     <Compile Include="Cell.cs" />
     <Compile Include="eBoardSize.cs" />
+    <Compile Include="eDirections.cs" />
+    <Compile Include="eGameMenu.cs" />
+    <Compile Include="eGameSigns.cs" />
     <Compile Include="eOnlyCheck.cs" />
-    <Compile Include="EnumGameMenu.cs" />
     <Compile Include="EnumLettersToNumbers.cs" />
-    <Compile Include="EnumGameSigns.cs" />
-    <Compile Include="EnumRules.cs" />
     <Compile Include="GameModel.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />

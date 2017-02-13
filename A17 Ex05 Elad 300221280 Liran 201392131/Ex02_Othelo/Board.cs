@@ -24,23 +24,23 @@ namespace Ex02_Othelo
 			{
 				for (int j = 0; j < m_Size; j++)
 				{
-					m_ArrayCell[i, j] = new Cell((char)eGameSigns.eGameSigns.None, i, j);
+					m_ArrayCell[i, j] = new Cell((char)eGameSigns.None, i, j);
 				}
 			}
 
-			if (m_Size == (int)eBoardSize.eBoardSize.Eight)
+			if (m_Size == (int)eBoardSize.Eight)
 			{
-				m_ArrayCell[3, 4].SignValue = (char)eGameSigns.eGameSigns.X;
-				m_ArrayCell[4, 3].SignValue = (char)eGameSigns.eGameSigns.X;
-				m_ArrayCell[3, 3].SignValue = (char)eGameSigns.eGameSigns.O;
-				m_ArrayCell[4, 4].SignValue = (char)eGameSigns.eGameSigns.O;
+				m_ArrayCell[3, 4].SignValue = (char)eGameSigns.X;
+				m_ArrayCell[4, 3].SignValue = (char)eGameSigns.X;
+				m_ArrayCell[3, 3].SignValue = (char)eGameSigns.O;
+				m_ArrayCell[4, 4].SignValue = (char)eGameSigns.O;
 			}
-            else if (m_Size == (int)eBoardSize.eBoardSize.Ten)
+            else if (m_Size == (int)eBoardSize.Ten)
 				{
-				m_ArrayCell[4, 5].SignValue = (char)eGameSigns.eGameSigns.X;
-				m_ArrayCell[5, 4].SignValue = (char)eGameSigns.eGameSigns.X;
-				m_ArrayCell[4, 4].SignValue = (char)eGameSigns.eGameSigns.O;
-				m_ArrayCell[5, 5].SignValue = (char)eGameSigns.eGameSigns.O;
+				m_ArrayCell[4, 5].SignValue = (char)eGameSigns.X;
+				m_ArrayCell[5, 4].SignValue = (char)eGameSigns.X;
+				m_ArrayCell[4, 4].SignValue = (char)eGameSigns.O;
+				m_ArrayCell[5, 5].SignValue = (char)eGameSigns.O;
 				}
         }
 
