@@ -53,7 +53,7 @@ namespace Ex05.OtheloUI
             {
                 for (int j = 1; j < m_GameModel.Board.Boardsize - 1; j++)
                 {
-                    if (m_GameModel.Board.CellBoard[i, j].SignValue == (char)(EnumGameSigns.e_Signs.X))
+                    if (m_GameModel.Board.CellBoard[i, j].SignValue == (char)(eGameSigns.eGameSigns.X))
                     {
 
                         pictureBoxarray[i, j] = new PictureBox();
@@ -68,7 +68,7 @@ namespace Ex05.OtheloUI
             
                     }
 
-                    if (m_GameModel.Board.CellBoard[i, j].SignValue == (char)EnumGameSigns.e_Signs.O)
+                    if (m_GameModel.Board.CellBoard[i, j].SignValue == (char)eGameSigns.eGameSigns.O)
                     {
                         pictureBoxarray[i, j] = new PictureBox();
                         pictureBoxarray[i, j].Image = Properties.Resources.CoinYellow;

@@ -2,7 +2,7 @@
 {
     public class Cell
     {
-        private char m_SignValue = (char)EnumGameSigns.e_Signs.None;
+        private char m_SignValue = (char)eGameSigns.None;
         private Point? m_Point = null;
 
         public Cell(char i_SignValue, int i_AxisXValue, int i_AxisYValue)

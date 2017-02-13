@@ -33,7 +33,7 @@ namespace Ex02_Othelo
             return moveResult;
         }
 
-        public bool LegalMove(Player i_player, Point i_point, EnumCheckOrChange.e_OnlyCheck i_mode)
+        public bool LegalMove(Player i_player, Point i_point, eOnlyCheck i_mode)
         {
             bool moveResult = m_GameRules.LegalMove(i_player, i_point, i_mode);
             List<int> scores = m_GameRules.GameScore;

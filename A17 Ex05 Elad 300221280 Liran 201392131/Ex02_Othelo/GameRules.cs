@@ -21,18 +21,18 @@ namespace Ex02_Othelo
 
         private char GetAgainstCurrentPlayerSign(Player i_Player)
         {
-            char sign = (char)EnumGameSigns.e_Signs.None;
+            char sign = (char)eGameSigns.None;
             switch (i_Player.PlayerWasher)
             {
-                case (char)EnumGameSigns.e_Signs.X:
+                case (char)eGameSigns.X:
                     {
-                        sign = (char)EnumGameSigns.e_Signs.O;
+                        sign = (char)eGameSigns.O;
                         break;
                     }
 
-                case (char)EnumGameSigns.e_Signs.O:
+                case (char)eGameSigns.O:
                     {
-                        sign = (char)EnumGameSigns.e_Signs.X;
+                        sign = (char)eGameSigns.X;
                         break;
                     }
             }
@@ -49,13 +49,13 @@ namespace Ex02_Othelo
             {
                 for (int j = 1; j < m_Board.Boardsize - 1; j++)
                 {
-                    if (m_Board.GetCellOnBoard(i, j).SignValue == (char)EnumGameSigns.e_Signs.None)
+                    if (m_Board.GetCellOnBoard(i, j).SignValue == (char)eGameSigns.None)
                     {
                         Point checkPoint = new Point(i, j);
-                        moveResult = LegalMove(i_Player, checkPoint, EnumCheckOrChange.e_OnlyCheck.Yes);
+                        moveResult = LegalMove(i_Player, checkPoint, eOnlyCheck.Yes);
                         if (moveResult)
                         {
-                            if (i_Player.PlayerType.Equals(EnumUserType.e_UserType.Computer))
+                            if (i_Player.PlayerType.Equals(eUserType.Computer))
                             {
                                 m_LegalMovesForComputer.Add(checkPoint);
                             }
@@ -74,7 +74,7 @@ namespace Ex02_Othelo
 				}
             }
 
-			if (i_Player.PlayerType.Equals(EnumUserType.e_UserType.Computer))
+			if (i_Player.PlayerType.Equals(eUserType.Computer))
 			{
                 moveResult = m_LegalMovesForComputer.Count > 0;	
 			}
@@ -86,14 +86,14 @@ namespace Ex02_Othelo
 		{
 			bool moveResult = false;
 			Point randomPoint = m_LegalMovesForComputer[m_RandomGenerator.Next(m_LegalMovesForComputer.Count)];
-			moveResult = LegalMove(i_Player, randomPoint, EnumCheckOrChange.e_OnlyCheck.No);
+			moveResult = LegalMove(i_Player, randomPoint, eOnlyCheck.No);
             return moveResult;
         }
 
-        public bool LegalMove(Player i_Player, Point i_Point, EnumCheckOrChange.e_OnlyCheck i_Mode)
+        public bool LegalMove(Player i_Player, Point i_Point, eOnlyCheck i_Mode)
         {
             bool moveResult = false;
-            if (m_Board.GetCellOnBoard(i_Point).SignValue == (char)EnumGameSigns.e_Signs.None)
+            if (m_Board.GetCellOnBoard(i_Point).SignValue == (char)eGameSigns.None)
             {
                 if (i_Point > m_StartRange && i_Point < m_EndRange)
                 {
@@ -104,23 +104,23 @@ namespace Ex02_Othelo
             return moveResult;
         }
 
-        private bool SummaryCallsCheckLegalMoveNotInBorders(Player i_Player, Point i_Point, EnumCheckOrChange.e_OnlyCheck i_Mode)
+        private bool SummaryCallsCheckLegalMoveNotInBorders(Player i_Player, Point i_Point, eOnlyCheck i_Mode)
         {
             bool[] legalMoves = new bool[8];
             int indexLegalMove;
             indexLegalMove = 0;
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, EnumRules.e_Rules.UpperLeftDiagonal, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, EnumRules.e_Rules.UpperRow, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, EnumRules.e_Rules.UpperRightDiagonal, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, EnumRules.e_Rules.RightColoum, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, EnumRules.e_Rules.DownRightDiagonal, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, EnumRules.e_Rules.DownRow, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, EnumRules.e_Rules.DownLeftDiagonal, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, EnumRules.e_Rules.LeftColoumn, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.UpperLeftDiagonal, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.UpperRow, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.UpperRightDiagonal, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.RightColoum, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.DownRightDiagonal, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.DownRow, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.DownLeftDiagonal, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.LeftColoumn, i_Mode);
             return IndicateForLegalMoves(legalMoves);
         }
 
-		private bool UpdateBorder(Player i_Player, Point i_Point, EnumRules.e_Rules i_Rule, EnumCheckOrChange.e_OnlyCheck i_Mode)
+		private bool UpdateBorder(Player i_Player, Point i_Point, eDirections i_Rule, eOnlyCheck i_Mode)
         {
             Point copyPoint = new Point(i_Point.AxisXValue, i_Point.AxisYValue);
             char washerAgainstPlayer = GetAgainstCurrentPlayerSign(i_Player);
@@ -145,7 +145,7 @@ namespace Ex02_Othelo
                 }
             }
 
-            if (moveResult && i_Mode == EnumCheckOrChange.e_OnlyCheck.No)
+            if (moveResult && i_Mode == eOnlyCheck.No)
             {
                 for (int i = 0; i < amountOppositeWasher; i++)
                 {
@@ -172,57 +172,57 @@ namespace Ex02_Othelo
             return wasLegal;
         }
 
-        private Point CalculateCellsToChange(Point i_Point, EnumRules.e_Rules i_Rule)
+        private Point CalculateCellsToChange(Point i_Point, eDirections i_Rule)
         {
             switch (i_Rule)
             {
-                case EnumRules.e_Rules.UpperLeftDiagonal:
+                case eDirections.UpperLeftDiagonal:
                     {
                         i_Point.AxisXValue -= 1;
                         i_Point.AxisYValue -= 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.UpperRow:
+                case eDirections.UpperRow:
                     {
                         i_Point.AxisXValue -= 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.UpperRightDiagonal:
+                case eDirections.UpperRightDiagonal:
                     {
                         i_Point.AxisXValue -= 1;
                         i_Point.AxisYValue += 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.RightColoum:
+                case eDirections.RightColoum:
                     {
                         i_Point.AxisYValue += 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.DownRightDiagonal:
+                case eDirections.DownRightDiagonal:
                     {
                         i_Point.AxisYValue += 1;
                         i_Point.AxisXValue += 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.DownRow:
+                case eDirections.DownRow:
                     {
                         i_Point.AxisXValue += 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.DownLeftDiagonal:
+                case eDirections.DownLeftDiagonal:
                     {
                         i_Point.AxisXValue += 1;
                         i_Point.AxisYValue -= 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.LeftColoumn:
+                case eDirections.LeftColoumn:
                     {
                         i_Point.AxisYValue -= 1;
                         break;
@@ -232,57 +232,57 @@ namespace Ex02_Othelo
             return i_Point;
         }
 
-        private Point RecoverPreviousPointValue(Point i_Point, EnumRules.e_Rules i_Rule)
+        private Point RecoverPreviousPointValue(Point i_Point, eDirections i_Rule)
         {
             switch (i_Rule)
             {
-                case EnumRules.e_Rules.UpperLeftDiagonal:
+                case eDirections.UpperLeftDiagonal:
                     {
                         i_Point.AxisXValue += 1;
                         i_Point.AxisYValue += 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.UpperRow:
+                case eDirections.UpperRow:
                     {
                         i_Point.AxisXValue += 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.UpperRightDiagonal:
+                case eDirections.UpperRightDiagonal:
                     {
                         i_Point.AxisXValue += 1;
                         i_Point.AxisYValue -= 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.RightColoum:
+                case eDirections.RightColoum:
                     {
                         i_Point.AxisYValue -= 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.DownRightDiagonal:
+                case eDirections.DownRightDiagonal:
                     {
                         i_Point.AxisYValue -= 1;
                         i_Point.AxisXValue -= 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.DownRow:
+                case eDirections.DownRow:
                     {
                         i_Point.AxisXValue -= 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.DownLeftDiagonal:
+                case eDirections.DownLeftDiagonal:
                     {
                         i_Point.AxisXValue -= 1;
                         i_Point.AxisYValue += 1;
                         break;
                     }
 
-                case EnumRules.e_Rules.LeftColoumn:
+                case eDirections.LeftColoumn:
                     {
                         i_Point.AxisYValue += 1;
                         break;
@@ -303,12 +303,12 @@ namespace Ex02_Othelo
                 {
                     for (int j = 1; j < m_Board.Boardsize - 1; j++)
                     {
-                        if (m_Board.CellBoard[i, j].SignValue == (char)EnumGameSigns.e_Signs.O)
+                        if (m_Board.CellBoard[i, j].SignValue == (char)eGameSigns.O)
                         {
                             secondPlayerScore++;
                         }
                         
-                        if (m_Board.CellBoard[i, j].SignValue == (char)EnumGameSigns.e_Signs.X)
+                        if (m_Board.CellBoard[i, j].SignValue == (char)eGameSigns.X)
                         {
                             firstPlayerScore++;
                         }
