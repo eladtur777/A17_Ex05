@@ -34,7 +34,23 @@ namespace Ex05.OtheloUI
             // 
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(390, 390);
+
+            switch (GameController.BoardSize)
+            {
+                case (int)eBoardSize.Six:
+                    this.ClientSize = new System.Drawing.Size(390, 390);
+                    break;
+                case (int)eBoardSize.Eight:
+                    this.ClientSize = new System.Drawing.Size(516, 516);
+                    break;
+                case (int)eBoardSize.Ten:
+                    this.ClientSize = new System.Drawing.Size(645, 645);
+                    break;
+                case (int)eBoardSize.Twelve:
+                    this.ClientSize = new System.Drawing.Size(774, 774);
+                    break;
+            }
+            
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Game";
