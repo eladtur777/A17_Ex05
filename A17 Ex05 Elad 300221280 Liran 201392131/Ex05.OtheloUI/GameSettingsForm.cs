@@ -14,9 +14,8 @@ namespace Ex05.OtheloUI
         private Button boardSizeButton;
         private Button playerVsComputerButton;
         private Button PlayerVsPlayerButton;
-        private int boardSize = 6;
-        GameModel m_Logic;
-
+        private int m_BoardSize = 6;
+        private Game m_gameForm;
         public GameSettingsForm()
         {
             InitializeComponent();
@@ -80,33 +79,39 @@ namespace Ex05.OtheloUI
 
         private void boardSizeButton_Click(object sender, EventArgs e)
         {
-           if(boardSize == 12)
+           if(m_BoardSize == 12)
             {
-                boardSize = 6;
+                m_BoardSize = 6;
             }
            else
             {
-                boardSize += 2;
+                m_BoardSize += 2;
             }
-            this.boardSizeButton.Text = string.Format("Board size:{0}x{0} (click to increase)", boardSize);
+            this.boardSizeButton.Text = string.Format("Board size:{0}x{0} (click to increase)", m_BoardSize);
         }
 
         private void PlayerVsPlayerButton_Click(object sender, EventArgs e)
         {
-            m_Logic = new GameModel(boardSize,"Yellow","Red");
+
+            GameController.BoardSize = m_BoardSize;
+            GameController.FirstPlayerName = "CoinRed";
+            GameController.SecondPlayerName = "CoinYellow";
             this.Hide();
             this.Close();
-            Game g = new Game();
-            g.ShowDialog();
+            m_gameForm = new Game();
+            m_gameForm.ShowDialog();
+
         }
 
         private void playerVsComputerButton_Click(object sender, EventArgs e)
         {
-            m_Logic = new GameModel(boardSize, "Yellow", "Computer");
+            GameController.BoardSize = m_BoardSize;
+            GameController.FirstPlayerName = "CoinRed";
+            GameController.SecondPlayerName = "Computer";
             this.Hide();
             this.Close();
-            Game g = new Game();
-            g.ShowDialog();
+            m_gameForm = new Game();
+            m_gameForm.ShowDialog();
         }
     }
 }

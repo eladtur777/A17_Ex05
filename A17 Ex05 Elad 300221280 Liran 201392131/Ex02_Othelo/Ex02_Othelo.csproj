@@ -38,11 +38,11 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="Cell.cs" />
-    <Compile Include="EnumBoardSize.cs" />
-    <Compile Include="EnumCheckOrChange.cs" />
+    <Compile Include="eBoardSize.cs" />
+    <Compile Include="eOnlyCheck.cs" />
     <Compile Include="EnumGameMenu.cs" />
-    <Compile Include="EnumGameSigns.cs" />
     <Compile Include="EnumLettersToNumbers.cs" />
+    <Compile Include="EnumGameSigns.cs" />
     <Compile Include="EnumRules.cs" />
     <Compile Include="GameModel.cs" />
     <Compile Include="Point.cs" />
@@ -51,7 +51,7 @@
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Player.cs" />
-    <Compile Include="EnumUserType.cs" />
+    <Compile Include="eUserType.cs" />
     <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>

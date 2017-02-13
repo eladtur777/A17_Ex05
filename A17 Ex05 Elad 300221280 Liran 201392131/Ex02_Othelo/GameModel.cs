@@ -66,13 +66,13 @@ namespace Ex02_Othelo
             }
         }
 
-        public StringBuilder BoardGameCreator
-        {
-            get
-            {
-                return m_Board.BoardGameCreator;
-            }
-        }
+        //public StringBuilder BoardGameCreator
+        //{
+        //    get
+        //    {
+        //        return m_Board.BoardGameCreator;
+        //    }
+        //}
 
         public int GetFirstPlayersScore
         {
