@@ -6,7 +6,7 @@
         private readonly string r_PlayerName;
         private int m_PlayerScore;
         private char m_PlayerWasher;
-        private EnumUserType.eUserType m_UserType;
+        private eUserType m_UserType;
 
         public Player(string i_PlayerName)
         {
@@ -33,7 +33,7 @@
             get { return r_PlayerName; }
         }
 
-        public EnumUserType.eUserType PlayerType
+        public eUserType PlayerType
         {
             get { return m_UserType; }
         }
@@ -42,11 +42,11 @@
         {
             if (m_PlayersAmount % 2 == 0)
             {
-                m_PlayerWasher = (char)EnumGameSigns.e_Signs.X;
+                m_PlayerWasher = (char)eGameSigns.X;
             }
             else if (m_PlayersAmount % 2 == 1)
             {
-                m_PlayerWasher = (char)EnumGameSigns.e_Signs.O;
+                m_PlayerWasher = (char)eGameSigns.O;
             }
         }
 
@@ -54,11 +54,11 @@
         {
             if (r_PlayerName.Equals("Computer"))
             {
-                m_UserType = EnumUserType.eUserType.Computer;
+                m_UserType = eUserType.Computer;
             }
             else
             {
-                m_UserType = EnumUserType.eUserType.Uman;
+                m_UserType = eUserType.Uman;
             }
         }
     }
