@@ -40,7 +40,7 @@
     <Compile Include="Cell.cs" />
     <Compile Include="EnumBoardSize.cs" />
     <Compile Include="EnumCheckOrChange.cs" />
-    <Compile Include="EnumGameMenu.cs" />
+    <Compile Include="eGameMenu.cs" />
     <Compile Include="EnumGameSigns.cs" />
     <Compile Include="EnumLettersToNumbers.cs" />
     <Compile Include="EnumRules.cs" />
