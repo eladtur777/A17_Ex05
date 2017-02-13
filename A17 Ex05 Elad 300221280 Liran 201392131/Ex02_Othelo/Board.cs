@@ -28,14 +28,14 @@ namespace Ex02_Othelo
 				}
 			}
 
-			if (m_Size == (int)EnumBoardSize.e_Size.Eight)
+			if (m_Size == (int)eBoardSize.eBoardSize.Eight)
 			{
 				m_ArrayCell[3, 4].SignValue = (char)EnumGameSigns.e_Signs.X;
 				m_ArrayCell[4, 3].SignValue = (char)EnumGameSigns.e_Signs.X;
 				m_ArrayCell[3, 3].SignValue = (char)EnumGameSigns.e_Signs.O;
 				m_ArrayCell[4, 4].SignValue = (char)EnumGameSigns.e_Signs.O;
 			}
-            else if (m_Size == (int)EnumBoardSize.e_Size.Ten)
+            else if (m_Size == (int)eBoardSize.eBoardSize.Ten)
 				{
 				m_ArrayCell[4, 5].SignValue = (char)EnumGameSigns.e_Signs.X;
 				m_ArrayCell[5, 4].SignValue = (char)EnumGameSigns.e_Signs.X;

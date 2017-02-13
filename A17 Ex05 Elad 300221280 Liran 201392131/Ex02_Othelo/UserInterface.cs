@@ -184,7 +184,7 @@ namespace Ex02_Othelo
         private void CheckLegalBoardSizeFromPlayer(string i_GetPlayerBoardSize)
         {
             bool parseUserInput = int.TryParse(i_GetPlayerBoardSize, out m_GetUserBoardSize);
-            if (((m_GetUserBoardSize == (int)EnumBoardSize.e_Size.Eight - 2 || m_GetUserBoardSize == (int)EnumBoardSize.e_Size.Ten - 2) && parseUserInput) == false)
+            if (((m_GetUserBoardSize == (int)eBoardSize.eBoardSize.Eight - 2 || m_GetUserBoardSize == (int)eBoardSize.eBoardSize.Ten - 2) && parseUserInput) == false)
             {
                 do
                 {
@@ -192,7 +192,7 @@ namespace Ex02_Othelo
                     i_GetPlayerBoardSize = Console.ReadLine();
                     parseUserInput = int.TryParse(i_GetPlayerBoardSize, out m_GetUserBoardSize);
                 }
-                while (((m_GetUserBoardSize == (int)EnumBoardSize.e_Size.Eight - 2 || m_GetUserBoardSize == (int)EnumBoardSize.e_Size.Ten - 2) && parseUserInput) == false);
+                while (((m_GetUserBoardSize == (int)eBoardSize.eBoardSize.Eight - 2 || m_GetUserBoardSize == (int)eBoardSize.eBoardSize.Ten - 2) && parseUserInput) == false);
             }
         }
 
@@ -274,7 +274,7 @@ namespace Ex02_Othelo
             EnumLettersToNumbers m_ConvertPlayerLetter = new EnumLettersToNumbers();
             bool isLegalMove = false;
             Point pointToSend = new Point(i_charArray[1] - '0', SwitchConvert(i_charArray[0]));
-            isLegalMove = m_Game.LegalMove(i_player, pointToSend, EnumCheckOrChange.e_OnlyCheck.No);
+            isLegalMove = m_Game.LegalMove(i_player, pointToSend, EnumCheckOrChange.eOnlyCheck.No);
             if (!isLegalMove)
             {
                 Console.Write("Ilegal move, please insert legal move :");

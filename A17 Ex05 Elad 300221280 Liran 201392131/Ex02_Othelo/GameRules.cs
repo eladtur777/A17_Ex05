@@ -52,10 +52,10 @@ namespace Ex02_Othelo
                     if (m_Board.GetCellOnBoard(i, j).SignValue == (char)EnumGameSigns.e_Signs.None)
                     {
                         Point checkPoint = new Point(i, j);
-                        moveResult = LegalMove(i_Player, checkPoint, EnumCheckOrChange.e_OnlyCheck.Yes);
+                        moveResult = LegalMove(i_Player, checkPoint, EnumCheckOrChange.eOnlyCheck.Yes);
                         if (moveResult)
                         {
-                            if (i_Player.PlayerType.Equals(EnumUserType.e_UserType.Computer))
+                            if (i_Player.PlayerType.Equals(EnumUserType.eUserType.Computer))
                             {
                                 m_LegalMovesForComputer.Add(checkPoint);
                             }
@@ -74,7 +74,7 @@ namespace Ex02_Othelo
 				}
             }
 
-			if (i_Player.PlayerType.Equals(EnumUserType.e_UserType.Computer))
+			if (i_Player.PlayerType.Equals(EnumUserType.eUserType.Computer))
 			{
                 moveResult = m_LegalMovesForComputer.Count > 0;	
 			}
@@ -86,11 +86,11 @@ namespace Ex02_Othelo
 		{
 			bool moveResult = false;
 			Point randomPoint = m_LegalMovesForComputer[m_RandomGenerator.Next(m_LegalMovesForComputer.Count)];
-			moveResult = LegalMove(i_Player, randomPoint, EnumCheckOrChange.e_OnlyCheck.No);
+			moveResult = LegalMove(i_Player, randomPoint, EnumCheckOrChange.eOnlyCheck.No);
             return moveResult;
         }
 
-        public bool LegalMove(Player i_Player, Point i_Point, EnumCheckOrChange.e_OnlyCheck i_Mode)
+        public bool LegalMove(Player i_Player, Point i_Point, EnumCheckOrChange.eOnlyCheck i_Mode)
         {
             bool moveResult = false;
             if (m_Board.GetCellOnBoard(i_Point).SignValue == (char)EnumGameSigns.e_Signs.None)
@@ -104,7 +104,7 @@ namespace Ex02_Othelo
             return moveResult;
         }
 
-        private bool SummaryCallsCheckLegalMoveNotInBorders(Player i_Player, Point i_Point, EnumCheckOrChange.e_OnlyCheck i_Mode)
+        private bool SummaryCallsCheckLegalMoveNotInBorders(Player i_Player, Point i_Point, EnumCheckOrChange.eOnlyCheck i_Mode)
         {
             bool[] legalMoves = new bool[8];
             int indexLegalMove;
@@ -120,7 +120,7 @@ namespace Ex02_Othelo
             return IndicateForLegalMoves(legalMoves);
         }
 
-		private bool UpdateBorder(Player i_Player, Point i_Point, EnumRules.e_Rules i_Rule, EnumCheckOrChange.e_OnlyCheck i_Mode)
+		private bool UpdateBorder(Player i_Player, Point i_Point, EnumRules.e_Rules i_Rule, EnumCheckOrChange.eOnlyCheck i_Mode)
         {
             Point copyPoint = new Point(i_Point.AxisXValue, i_Point.AxisYValue);
             char washerAgainstPlayer = GetAgainstCurrentPlayerSign(i_Player);
@@ -145,7 +145,7 @@ namespace Ex02_Othelo
                 }
             }
 
-            if (moveResult && i_Mode == EnumCheckOrChange.e_OnlyCheck.No)
+            if (moveResult && i_Mode == EnumCheckOrChange.eOnlyCheck.No)
             {
                 for (int i = 0; i < amountOppositeWasher; i++)
                 {
