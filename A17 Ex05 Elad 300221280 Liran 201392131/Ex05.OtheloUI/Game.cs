@@ -12,7 +12,7 @@ namespace Ex05.OtheloUI
     public partial class Game : Form
     {
         const int k_PictureBoxArea = 60;
-        const int k_SpaceBetweenPictures = 5;
+        const int k_SpaceBetweenPictures = 4;
         //const int k_SpaceHightBetweenPicture = 5;
         private int m_BoardSize;
         private PictureBox[,] pictureBoxarray;
@@ -32,6 +32,7 @@ namespace Ex05.OtheloUI
             // 
             // Game
             // 
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(802, 504);
             this.Name = "Game";
             this.Load += new System.EventHandler(this.Game_Load);
@@ -43,76 +44,70 @@ namespace Ex05.OtheloUI
 
         private void Game_Load(object sender, EventArgs e)
         {
-            int x = 0;
-            int y = 0;
+           // int x = 0;
+            //int y = 0;
 
             System.Drawing.Point pictureLocation = new System.Drawing.Point(k_SpaceBetweenPictures, k_SpaceBetweenPictures);
 
-            for (int i = 1; i < m_GameModel.Board.Boardsize - 2; i++)
+            for (int i = 1; i < m_GameModel.Board.Boardsize - 1; i++)
             {
-                for (int j = 1; j < m_GameModel.Board.Boardsize - 2; j++)
+                for (int j = 1; j < m_GameModel.Board.Boardsize - 1; j++)
                 {
                     if (m_GameModel.Board.CellBoard[i, j].SignValue == (char)(EnumGameSigns.e_Signs.X))
                     {
 
-                        //Size = new Size(50, 50),
-                        //Location = new System.Drawing.Point(x, y),
-                        //ImageLocation = @"CoinsImages\CoinRed.png",
-                        //// SizeMode = PictureBoxSizeMode.CenterImage
-
                         pictureBoxarray[i, j] = new PictureBox();
-                       // pictureBoxarray[i, j].ImageLocation = img1;
                         pictureBoxarray[i,j].Image = Properties.Resources.CoinRed;
                         pictureBoxarray[i, j].Margin = new Padding(k_SpaceBetweenPictures);
                         pictureBoxarray[i, j].Visible = true;
                         pictureBoxarray[i, j].Location = pictureLocation;
                         pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
-                        //  this.Size = new Size(250, 250);
                         pictureBoxarray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
                        // pictureBoxarray[i, j].Click += pi
                         this.Controls.Add(pictureBoxarray[i, j]);
-                       
-
+            
                     }
 
                     if (m_GameModel.Board.CellBoard[i, j].SignValue == (char)EnumGameSigns.e_Signs.O)
                     {
                         pictureBoxarray[i, j] = new PictureBox();
-                        // pictureBoxarray[i, j].ImageLocation = img1;
                         pictureBoxarray[i, j].Image = Properties.Resources.CoinYellow;
                         pictureBoxarray[i, j].Margin = new Padding(k_SpaceBetweenPictures);
                         pictureBoxarray[i, j].Visible = true;
                         pictureBoxarray[i, j].Location = pictureLocation;
                         pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
-                        //  this.Size = new Size(250, 250);
                         pictureBoxarray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
                         // pictureBoxarray[i, j].Click += pi
                         this.Controls.Add(pictureBoxarray[i, j]);
+       
 
                     }
 
-                    else
+                    else if(m_GameModel.Board.CellBoard[i, j].SignValue == (char)EnumGameSigns.e_Signs.None)
                     {
-                        pictureBoxarray[i, j] = new PictureBox();
-                        // pictureBoxarray[i, j].ImageLocation = img1;
-                       // pictureBoxarray[i, j].Image = Properties.Resources.CoinYellow;
+
+                        pictureBoxarray[i, j] = new PictureBox() { BackColor = Color.Red };
+                        pictureBoxarray[i, j].Image = Properties.Resources.White;
                         pictureBoxarray[i, j].Margin = new Padding(k_SpaceBetweenPictures);
                         pictureBoxarray[i, j].Visible = true;
                         pictureBoxarray[i, j].Location = pictureLocation;
                         pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
-                        //  this.Size = new Size(250, 250);
                         pictureBoxarray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
                         // pictureBoxarray[i, j].Click += pi
                         this.Controls.Add(pictureBoxarray[i, j]);
+          
 
                     }
 
-
+           
                 }
 
 
-                pictureLocation.X += k_SpaceBetweenPictures;
+                //  pictureLocation.X += k_SpaceBetweenPictures;
                 pictureLocation.Y += k_PictureBoxArea + k_SpaceBetweenPictures;
+
+
+
 
             }
 
