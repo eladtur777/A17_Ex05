@@ -96,6 +96,7 @@ namespace Ex05.OtheloUI
             GameController.BoardSize = m_BoardSize;
             GameController.FirstPlayerName = "CoinRed";
             GameController.SecondPlayerName = "CoinYellow";
+            GameController.GameType = (int)eGameMenu.PlayerVsPlayer;
             this.Hide();
             this.Close();
             m_gameForm = new Game();
@@ -108,6 +109,7 @@ namespace Ex05.OtheloUI
             GameController.BoardSize = m_BoardSize;
             GameController.FirstPlayerName = "CoinRed";
             GameController.SecondPlayerName = "Computer";
+            GameController.GameType = (int)eGameMenu.PlayerVsComputer;
             this.Hide();
             this.Close();
             m_gameForm = new Game();

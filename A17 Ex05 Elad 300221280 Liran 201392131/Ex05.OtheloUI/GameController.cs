@@ -7,9 +7,22 @@ namespace Ex05.OtheloUI
 {
     public class GameController
     {
+        static int m_GameType;
         static string m_FirstPlayerName;
         static string m_SecondPlayerName;
         static int m_BoardSize;
+
+        public static int GameType
+        {
+            get
+            {
+                return m_GameType;
+            }
+            set
+            {
+                m_GameType = value;
+            }
+        }
 
         public static string FirstPlayerName
         {
