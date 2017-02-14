@@ -53,14 +53,15 @@ namespace Ex05.OtheloUI
 
         private void buildBoard()
         {
-            Array.Clear(pictureBoxarray,0,m_BoardSize);
+            //Array.Clear(pictureBoxarray,1,m_BoardSize);
+         
             for (int i = 1; i < m_BoardSize - 1; i++)
             {
                 for (int j = 1; j < m_BoardSize - 1; j++)
                 {
                     if (m_GameModel.Board.CellBoard[i, j].SignValue == (char)(eGameSigns.X))
                     {
-
+              
                         pictureBoxarray[i, j] = new PictureBox();
                         pictureBoxarray[i, j].Image = Properties.Resources.CoinRed;
                         pictureBoxarray[i, j].Margin = new Padding(k_SpaceBetweenPictures);
@@ -181,6 +182,7 @@ namespace Ex05.OtheloUI
                         player1Turn = false;
                         player2Turn = true;
                         this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
+                        clearPictureBoxArray();
                         buildBoard();
 
                     }
@@ -284,10 +286,10 @@ namespace Ex05.OtheloUI
 
         private bool UpdateBoard(char[] i_charArray, Player i_player)
         {
-            bool isMooveSucceed = false;
+            bool isMooveSucceed = true;
             EnumLettersToNumbers m_ConvertPlayerLetter = new EnumLettersToNumbers();
             bool isLegalMove = false;
-            Ex02_Othelo.Point pointToSend = new Ex02_Othelo.Point(i_charArray[1] - '0', i_charArray[0] - '0');
+            Ex02_Othelo.Point pointToSend = new Ex02_Othelo.Point(i_charArray[0] - '0', i_charArray[1] - '0');
             isLegalMove = m_GameModel.LegalMove(i_player, pointToSend, eOnlyCheck.No);
             if (!isLegalMove)
             {
@@ -344,6 +346,20 @@ namespace Ex05.OtheloUI
             //}
             //}
             //while (inCorrectInput);
+        }
+
+        private void clearPictureBoxArray()
+        {
+            for (int i = 1; i < m_BoardSize - 1; i++)
+            {
+                for (int j = 1; j < m_BoardSize - 1; j++)
+                {
+                    pictureBoxarray[i,j].Image = null;
+                    pictureBoxarray[i,j].Invalidate();
+
+                }
+            }
+           
         }
 
         private void CallTheWinner(int i_FirstPlayerScore, int i_SecondPlayerScore)
