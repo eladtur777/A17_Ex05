@@ -37,29 +37,12 @@ namespace Ex05.OtheloUI
             // 
             // Game
             // 
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-
-            switch (GameController.BoardSize)
-            {
-                case (int)eBoardSize.Six:
-                    this.ClientSize = new System.Drawing.Size(390, 390);
-                    break;
-                case (int)eBoardSize.Eight:
-                    this.ClientSize = new System.Drawing.Size(516, 516);
-                    break;
-                case (int)eBoardSize.Ten:
-                    this.ClientSize = new System.Drawing.Size(645, 645);
-                    break;
-                case (int)eBoardSize.Twelve:
-                    this.ClientSize = new System.Drawing.Size(774, 774);
-                    break;
-            }
-
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Game";
             this.ShowIcon = false;
+            this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.Game_Load);
@@ -133,6 +116,21 @@ namespace Ex05.OtheloUI
 
         private void Game_Load(object sender, EventArgs e)
         {
+            switch (GameController.BoardSize)
+            {
+                case (int)eBoardSize.Six:
+                    this.ClientSize = new System.Drawing.Size(390, 390);
+                    break;
+                case (int)eBoardSize.Eight:
+                    this.ClientSize = new System.Drawing.Size(516, 516);
+                    break;
+                case (int)eBoardSize.Ten:
+                    this.ClientSize = new System.Drawing.Size(645, 645);
+                    break;
+                case (int)eBoardSize.Twelve:
+                    this.ClientSize = new System.Drawing.Size(774, 774);
+                    break;
+            }
             buildBoard();
         }
 
@@ -160,6 +158,7 @@ namespace Ex05.OtheloUI
                 {
                     m_LegalMoveForFirstPlayer = false;
                     MessageBox.Show(string.Format("{0} you out of moves", m_GameModel.FirstPlayer.PlayerName));
+                    this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
                     player1Turn = false;
                     player2Turn = true;
 
@@ -169,31 +168,47 @@ namespace Ex05.OtheloUI
                 {
                     ////if yes ,dont pick up a flag and do this:
                     m_LegalMoveForFirstPlayer = true;
-                    this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
+                  
+                   // this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
                     char[] playerInput;
                     playerInput = pb.Name.ToCharArray();
-                    UpdateBoard(playerInput, m_GameModel.FirstPlayer);
-                 
-                    buildBoard();
-                    ////player 2 turn
-                    player1Turn = false;
-                    player2Turn = true;
-                    this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
+                   bool isLegalMoove = UpdateBoard(playerInput, m_GameModel.FirstPlayer);
+
+                    if (isLegalMoove)
+                    {
+                
+                        ////player 2 turn
+                        player1Turn = false;
+                        player2Turn = true;
+                        this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
+                        buildBoard();
+
+                    }
+                    ////player 1 turn again- because of bad legal moove chose
+                    else
+                    {
+                        player1Turn = true;
+                        player2Turn = false;
+                        this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
+                       // buildBoard();
+
+                    }
+                   
 
                 }
             }
 
 
-            if (player2Turn == true)
+           else if (player2Turn == true)
             {
-
+                this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
                 if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
                 {
                     ////computer turn
                     //// first check if there is legal mooves for computer in all board
                     if (m_GameModel.ThereIsExisitingLegalMove(m_GameModel.SecondPlayer))
                     {
-                        this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
+                       // this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
                         m_LegalMoveForSecondPlayer = true;
                         m_GameModel.LegalMove(m_GameModel.SecondPlayer);
                         buildBoard();
@@ -225,18 +240,28 @@ namespace Ex05.OtheloUI
                     {
                         ////if yes ,dont pick up a flag and do this:
                         m_LegalMoveForSecondPlayer = true;
-                        this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
+                      //  this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
                         char[] playerInput;
                         playerInput = pb.Name.ToCharArray();
-                        UpdateBoard(playerInput, m_GameModel.SecondPlayer);
+                      bool isLegalMoove =  UpdateBoard(playerInput, m_GameModel.SecondPlayer);
 
+                        if(isLegalMoove)
+                        {
+                            player1Turn = true;
+                            player2Turn = false;
+                            this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
+                            buildBoard();
 
-                        //clear pictureBox array
-                        buildBoard();
-                        ////player 1 turn
-                        player1Turn = true;
-                        player2Turn = false;
-                        this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
+                        }
+
+                         else
+                        {
+                            player1Turn = false;
+                            player2Turn = true;
+                            this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
+                          //  buildBoard();
+
+                        }
                     }
                     else
                     {
@@ -257,18 +282,21 @@ namespace Ex05.OtheloUI
             }
         }
 
-        private void UpdateBoard(char[] i_charArray, Player i_player)
+        private bool UpdateBoard(char[] i_charArray, Player i_player)
         {
-
+            bool isMooveSucceed = false;
             EnumLettersToNumbers m_ConvertPlayerLetter = new EnumLettersToNumbers();
             bool isLegalMove = false;
-            Ex02_Othelo.Point pointToSend = new Ex02_Othelo.Point(i_charArray[0] - '0', i_charArray[1] - '0');
+            Ex02_Othelo.Point pointToSend = new Ex02_Othelo.Point(i_charArray[1] - '0', i_charArray[0] - '0');
             isLegalMove = m_GameModel.LegalMove(i_player, pointToSend, eOnlyCheck.No);
             if (!isLegalMove)
             {
                 MessageBox.Show("Ilegal move, please choose legal move");
+                isMooveSucceed = false;
 
             }
+
+            return isMooveSucceed;
         }
 
         /// <summary>
