@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Ex02_Othelo
 {
-    public delegate void Updater(char i_SignValue, Point i_Point);
     public class GameRules
     {
         private Board m_Board = null;
@@ -12,7 +11,8 @@ namespace Ex02_Othelo
 		private Random m_RandomGenerator = new Random();
 		private List<Point> m_LegalMovesForComputer = new List<Point>();
         private List<int> m_ScoreList = new List<int>();
-        public event Updater UpdatingSignValue;
+        public event DelegateContainer.Updater<char, Point> UpdatingSignValue;
+        public event DelegateContainer.Updater<Point> UpdatingLegalityCellOption;
 
         public GameRules(ref Board io_Board)
         {
@@ -155,6 +155,14 @@ namespace Ex02_Othelo
                     m_Board.UpdateSignCellOnBoardByPoint(i_Player.PlayerWasher, copyPoint);
                     OnUpdateCellSignValue(i_Player.PlayerWasher, copyPoint);
                 }
+            }
+            else if (moveResult && i_Mode == eOnlyCheck.Yes)
+            {
+                for (int i = 0; i < amountOppositeWasher; i++)
+                {
+                    copyPoint = RecoverPreviousPointValue(copyPoint, i_Rule);
+                }
+                OnUpdateCellOption(copyPoint);
             }
 
             return moveResult;
@@ -324,11 +332,19 @@ namespace Ex02_Othelo
             }
         }
        
-        protected virtual void OnUpdateCellSignValue(char i_PlayerWasher, Point i_Point)
+        private void OnUpdateCellSignValue(char i_PlayerWasher, Point i_Point)
         {
             if (this.UpdatingSignValue != null)
             {
                 this.UpdatingSignValue(i_PlayerWasher, i_Point);
+            }
+        }
+
+        private void OnUpdateCellOption(Point i_Point)
+        {
+            if(this.UpdatingLegalityCellOption != null)
+            {
+                this.UpdatingLegalityCellOption(i_Point);
             }
         }
     }  

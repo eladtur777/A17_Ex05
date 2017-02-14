@@ -10,8 +10,8 @@ namespace Ex02_Othelo
         private Board m_Board = null;
         private GameRules m_GameRules = null;
         private StringBuilder m_BoardGame = new StringBuilder();
-        public event Updater TrnsferingSignValueUpdate;
-
+        public event DelegateContainer.Updater<char, Point> TrnsferingSignValueUpdate;
+        public event DelegateContainer.Updater<Point> TrnsferingLegalityCellOption;
         public GameModel(int i_BoardSize, string i_FirstPlayerName, string i_SecondPlayerName)
         {
             m_FirstPlayer = new Player(i_FirstPlayerName);
@@ -19,11 +19,7 @@ namespace Ex02_Othelo
             m_Board = new Board(i_BoardSize);
             m_GameRules = new GameRules(ref m_Board);
             m_GameRules.UpdatingSignValue += listnerForUpdateSignValue;
-        }
-
-        private void listnerForUpdateSignValue(char i_PlayerWasher, Point i_Point)
-        {
-            onTransferingSignValueUpdate(i_PlayerWasher, i_Point);
+            m_GameRules.UpdatingLegalityCellOption += listnerForLegalityCellOption;
         }
 
         public bool ThereIsExisitingLegalMove(Player i_player)
@@ -97,11 +93,29 @@ namespace Ex02_Othelo
             }
         }
 
+        private void listnerForUpdateSignValue(char i_PlayerWasher, Point i_Point)
+        {
+            onTransferingSignValueUpdate(i_PlayerWasher, i_Point);
+        }
+
+        private void listnerForLegalityCellOption(Point i_Point)
+        {
+            onTrnsferingLegalityCellOption(i_Point);
+        }
+
         private void onTransferingSignValueUpdate(char i_PlayerWasher, Point i_Point)
         {
-            if(this.TrnsferingSignValueUpdate != null)
+            if (this.TrnsferingSignValueUpdate != null)
             {
                 this.TrnsferingSignValueUpdate(i_PlayerWasher, i_Point);
+            }
+        }
+
+        private void onTrnsferingLegalityCellOption(Point i_Point)
+        {
+            if (this.TrnsferingLegalityCellOption != null)
+            {
+                this.TrnsferingLegalityCellOption(i_Point);
             }
         }
     }

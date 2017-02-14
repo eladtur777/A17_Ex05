@@ -7,5 +7,4 @@
         Twelve = 12,
         Fourteen = 14
     }
-
 }

@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Ex02_Othelo;
-
 namespace Ex05.OtheloUI
 {
     public partial class Game : Form
@@ -14,22 +13,24 @@ namespace Ex05.OtheloUI
         const int k_PictureBoxArea = 60;
         const int k_SpaceBetweenPictures = 4;
         private int m_BoardSize;
-        private PictureBox[,] pictureBoxarray;
+        private PictureBox[,] pictureBoxArray;
         private GameModel m_GameModel;
         private bool player1Turn = true;
         private bool player2Turn = false;
         private bool m_LegalMoveForFirstPlayer = true;
         private bool m_LegalMoveForSecondPlayer = true;
         System.Drawing.Point pictureLocation;
-
+        List<PictureBox> m_ListOfLegalityBoardPictureBox = new List<PictureBox>();
+        
         public Game()
         {
             m_GameModel = new GameModel(GameController.BoardSize, GameController.FirstPlayerName, GameController.SecondPlayerName);
             m_BoardSize = m_GameModel.Board.Boardsize;
-            pictureBoxarray = new PictureBox[m_BoardSize, m_BoardSize];
+            pictureBoxArray = new PictureBox[m_BoardSize, m_BoardSize];
             pictureLocation = new System.Drawing.Point(k_SpaceBetweenPictures, k_SpaceBetweenPictures);
             InitializeComponent();
             m_GameModel.TrnsferingSignValueUpdate += UpdateCoinToPictureBox;
+            m_GameModel.TrnsferingLegalityCellOption += UpdateLegalityOptionOnPicturBox;
         }
 
         private void InitializeComponent()
@@ -63,29 +64,29 @@ namespace Ex05.OtheloUI
                     if (m_GameModel.Board.CellBoard[i, j].SignValue == (char)(eGameSigns.X))
                     {
 
-                        pictureBoxarray[i, j] = new PictureBox();
-                        pictureBoxarray[i, j].Image = Properties.Resources.CoinRed;
-                        pictureBoxarray[i, j].Margin = new Padding(k_SpaceBetweenPictures);
-                        pictureBoxarray[i, j].Visible = true;
-                        pictureBoxarray[i, j].Location = pictureLocation;
+                        pictureBoxArray[i, j] = new PictureBox();
+                        pictureBoxArray[i, j].Image = Properties.Resources.CoinRed;
+                        pictureBoxArray[i, j].Margin = new Padding(k_SpaceBetweenPictures);
+                        pictureBoxArray[i, j].Visible = true;
+                        pictureBoxArray[i, j].Location = pictureLocation;
                         pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
-                        pictureBoxarray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
+                        pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
                         //    pictureBoxarray[i, j].Click += new EventHandler(this.pictureBox_Mouseclick);
-                        this.Controls.Add(pictureBoxarray[i, j]);
+                        this.Controls.Add(pictureBoxArray[i, j]);
 
                     }
 
                     if (m_GameModel.Board.CellBoard[i, j].SignValue == (char)eGameSigns.O)
                     {
-                        pictureBoxarray[i, j] = new PictureBox();
-                        pictureBoxarray[i, j].Image = Properties.Resources.CoinYellow;
-                        pictureBoxarray[i, j].Margin = new Padding(k_SpaceBetweenPictures);
-                        pictureBoxarray[i, j].Visible = true;
-                        pictureBoxarray[i, j].Location = pictureLocation;
+                        pictureBoxArray[i, j] = new PictureBox();
+                        pictureBoxArray[i, j].Image = Properties.Resources.CoinYellow;
+                        pictureBoxArray[i, j].Margin = new Padding(k_SpaceBetweenPictures);
+                        pictureBoxArray[i, j].Visible = true;
+                        pictureBoxArray[i, j].Location = pictureLocation;
                         pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
-                        pictureBoxarray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
+                        pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
                         //  pictureBoxarray[i, j].Click += new EventHandler(this.pictureBox_Mouseclick);
-                        this.Controls.Add(pictureBoxarray[i, j]);
+                        this.Controls.Add(pictureBoxArray[i, j]);
 
 
                     }
@@ -93,18 +94,18 @@ namespace Ex05.OtheloUI
                     else if (m_GameModel.Board.CellBoard[i, j].SignValue == (char)eGameSigns.None)
                     {
 
-                        pictureBoxarray[i, j] = new PictureBox() { BackColor = Color.CadetBlue };
-                        pictureBoxarray[i, j].Image = Properties.Resources.White;
-                        pictureBoxarray[i, j].Margin = new Padding(k_SpaceBetweenPictures);
-                        pictureBoxarray[i, j].Visible = true;
-                        pictureBoxarray[i, j].Location = pictureLocation;
-                        pictureBoxarray[i, j].Name = string.Format("{0}{1}", i, j);
+                        pictureBoxArray[i, j] = new PictureBox() { BackColor = Color.CadetBlue };
+                        pictureBoxArray[i, j].Image = Properties.Resources.White;
+                        pictureBoxArray[i, j].Margin = new Padding(k_SpaceBetweenPictures);
+                        pictureBoxArray[i, j].Visible = true;
+                        pictureBoxArray[i, j].Location = pictureLocation;
+                        pictureBoxArray[i, j].Name = string.Format("{0}{1}", i, j);
                         pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
-                        pictureBoxarray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
-                        pictureBoxarray[i, j].Click += new EventHandler(this.pictureBox_Mouseclick);
-                        pictureBoxarray[i, j].MouseHover += new EventHandler(this.pictureBox_MouseHover);
-                        pictureBoxarray[i, j].MouseLeave += new EventHandler(this.pictureBox_MouseLeave);
-                        this.Controls.Add(pictureBoxarray[i, j]);
+                        pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
+                        pictureBoxArray[i, j].Click += new EventHandler(this.pictureBox_Mouseclick);
+                        pictureBoxArray[i, j].MouseHover += new EventHandler(this.pictureBox_MouseHover);
+                        pictureBoxArray[i, j].MouseLeave += new EventHandler(this.pictureBox_MouseLeave);
+                        this.Controls.Add(pictureBoxArray[i, j]);
                     }
 
                 }
@@ -168,14 +169,21 @@ namespace Ex05.OtheloUI
 
                 else
                 {
+                    ///TODO need to add here new draw of board function , all legality options should appear in green color 
                     ////if yes ,dont pick up a flag and do this:
                     m_LegalMoveForFirstPlayer = true;
+                                  
+                    foreach(PictureBox pictureBox in m_ListOfLegalityBoardPictureBox)
+                    {
+                        pictureBox.Image = Properties.Resources.White;
+                    }
+                    m_ListOfLegalityBoardPictureBox.Clear();
 
                     // this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
                     char[] playerInput;
                     playerInput = pb.Name.ToCharArray();
                     bool isLegalMoove = UpdateBoard(playerInput, m_GameModel.FirstPlayer);
-
+                    ///TODO need to add here new draw of board function ,all move appears here correctly 
                     if (isLegalMoove)
                     {
 
@@ -308,12 +316,12 @@ namespace Ex05.OtheloUI
             {
                 case (char)eGameSigns.X:
                     {
-                        pictureBoxarray[i_Point.AxisXValue, i_Point.AxisYValue].Image = Properties.Resources.CoinRed;
+                        pictureBoxArray[i_Point.AxisXValue, i_Point.AxisYValue].Image = Properties.Resources.CoinRed;
                         break;
                     }
                 case (char)eGameSigns.O:
                     {
-                        pictureBoxarray[i_Point.AxisXValue, i_Point.AxisYValue].Image = Properties.Resources.CoinYellow;
+                        pictureBoxArray[i_Point.AxisXValue, i_Point.AxisYValue].Image = Properties.Resources.CoinYellow;
                         break;
                     }
             }
@@ -365,6 +373,11 @@ namespace Ex05.OtheloUI
             //}
             //while (inCorrectInput);
         }
+        private void updateLegalityOptionOnPicturBox(Ex02_Othelo.Point i_Point)
+        {
+            pictureBoxArray[i_Point.AxisXValue, i_Point.AxisYValue].Image = Properties.Resources.White;// Elad change it to Green
+            m_ListOfLegalityBoardPictureBox.Add(pictureBoxArray[i_Point.AxisXValue, i_Point.AxisYValue]);
+        }
 
         private void clearPictureBoxArray()
         {
@@ -372,8 +385,8 @@ namespace Ex05.OtheloUI
             {
                 for (int j = 1; j < m_BoardSize - 1; j++)
                 {
-                    pictureBoxarray[i, j].Image = null;
-                    pictureBoxarray[i, j].Invalidate();
+                    pictureBoxArray[i, j].Image = null;
+                    pictureBoxArray[i, j].Invalidate();
 
                 }
             }
