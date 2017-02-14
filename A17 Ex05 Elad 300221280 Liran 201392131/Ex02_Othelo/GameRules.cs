@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Ex02_Othelo
 {
+    public delegate void Updater(char i_SignValue, Point i_Point);
     public class GameRules
     {
         private Board m_Board = null;
@@ -11,7 +12,8 @@ namespace Ex02_Othelo
 		private Random m_RandomGenerator = new Random();
 		private List<Point> m_LegalMovesForComputer = new List<Point>();
         private List<int> m_ScoreList = new List<int>();
-        
+        public event Updater UpdatingSignValue;
+
         public GameRules(ref Board io_Board)
         {
             m_Board = io_Board;
@@ -49,7 +51,7 @@ namespace Ex02_Othelo
             {
                 for (int j = 1; j < m_Board.Boardsize - 1; j++)
                 {
-                    if (m_Board.GetCellOnBoard(i, j).SignValue == (char)eGameSigns.None)
+                    if (m_Board.CellOnBoardByLocation(i, j).SignValue == (char)eGameSigns.None)
                     {
                         Point checkPoint = new Point(i, j);
                         moveResult = LegalMove(i_Player, checkPoint, eOnlyCheck.Yes);
@@ -150,7 +152,8 @@ namespace Ex02_Othelo
                 for (int i = 0; i < amountOppositeWasher; i++)
                 {
                     copyPoint = RecoverPreviousPointValue(copyPoint, i_Rule);
-                    m_Board.SetSignCellOnBoard(i_Player.PlayerWasher, copyPoint);
+                    m_Board.UpdateSignCellOnBoardByPoint(i_Player.PlayerWasher, copyPoint);
+                    OnUpdateCellSignValue(i_Player.PlayerWasher, copyPoint);
                 }
             }
 
@@ -294,7 +297,7 @@ namespace Ex02_Othelo
 
         public List<int> GameScore
         {
-             get
+            get
             {
                 m_ScoreList.Clear();
                 int firstPlayerScore = 0;
@@ -307,7 +310,7 @@ namespace Ex02_Othelo
                         {
                             secondPlayerScore++;
                         }
-                        
+
                         if (m_Board.CellBoard[i, j].SignValue == (char)eGameSigns.X)
                         {
                             firstPlayerScore++;
@@ -320,5 +323,13 @@ namespace Ex02_Othelo
                 return m_ScoreList;
             }
         }
-    }
+       
+        protected virtual void OnUpdateCellSignValue(char i_PlayerWasher, Point i_Point)
+        {
+            if (this.UpdatingSignValue != null)
+            {
+                this.UpdatingSignValue(i_PlayerWasher, i_Point);
+            }
+        }
+    }  
 }

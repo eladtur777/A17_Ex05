@@ -44,8 +44,7 @@ namespace Ex02_Othelo
 				}
         }
 
-        // $G$ NTT-005 (-10) You should use properties, not Get/Set methods...
-        public void SetSignCellOnBoard(char i_Sign, Point i_point)
+        public void UpdateSignCellOnBoardByPoint(char i_Sign, Point i_point)
         {
             m_ArrayCell[i_point.AxisXValue, i_point.AxisYValue].SignValue = i_Sign;
         }
@@ -55,7 +54,7 @@ namespace Ex02_Othelo
             return m_ArrayCell[i_point.AxisXValue, i_point.AxisYValue];
         }
 
-        public Cell GetCellOnBoard(int i_x, int i_y)
+        public Cell CellOnBoardByLocation(int i_x, int i_y)
         {
             return m_ArrayCell[i_x, i_y];
         }

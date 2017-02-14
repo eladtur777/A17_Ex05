@@ -10,6 +10,7 @@ namespace Ex02_Othelo
         private Board m_Board = null;
         private GameRules m_GameRules = null;
         private StringBuilder m_BoardGame = new StringBuilder();
+        public event Updater TrnsferingSignValueUpdate;
 
         public GameModel(int i_BoardSize, string i_FirstPlayerName, string i_SecondPlayerName)
         {
@@ -17,6 +18,12 @@ namespace Ex02_Othelo
             m_SecondPlayer = new Player(i_SecondPlayerName);
             m_Board = new Board(i_BoardSize);
             m_GameRules = new GameRules(ref m_Board);
+            m_GameRules.UpdatingSignValue += listnerForUpdateSignValue;
+        }
+
+        private void listnerForUpdateSignValue(char i_PlayerWasher, Point i_Point)
+        {
+            onTransferingSignValueUpdate(i_PlayerWasher, i_Point);
         }
 
         public bool ThereIsExisitingLegalMove(Player i_player)
@@ -87,6 +94,14 @@ namespace Ex02_Othelo
             get
             {
                 return m_SecondPlayer.PlayerScore;
+            }
+        }
+
+        private void onTransferingSignValueUpdate(char i_PlayerWasher, Point i_Point)
+        {
+            if(this.TrnsferingSignValueUpdate != null)
+            {
+                this.TrnsferingSignValueUpdate(i_PlayerWasher, i_Point);
             }
         }
     }

@@ -4,7 +4,7 @@
     {
         private char m_SignValue = (char)eGameSigns.None;
         private Point? m_Point = null;
-
+       
         public Cell(char i_SignValue, int i_AxisXValue, int i_AxisYValue)
         {
             m_Point = new Point(i_AxisXValue, i_AxisYValue);
