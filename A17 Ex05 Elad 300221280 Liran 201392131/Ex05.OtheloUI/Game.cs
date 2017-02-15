@@ -30,12 +30,12 @@ namespace Ex05.OtheloUI
             pictureLocation = new System.Drawing.Point(k_SpaceBetweenPictures, k_SpaceBetweenPictures);
             InitializeComponent();
             m_GameModel.TrnsferingSignValueUpdate += UpdateCoinToPictureBox;
-            m_GameModel.TrnsferingLegalityCellOption += UpdateLegalityOptionOnPicturBox;
+            m_GameModel.TrnsferingLegalityCellOption += updateLegalityOptionOnPicturBox;
         }
 
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+           // this.SuspendLayout();
             // 
             // Game
             // 
@@ -103,8 +103,8 @@ namespace Ex05.OtheloUI
                         pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
                         pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
                         pictureBoxArray[i, j].Click += new EventHandler(this.pictureBox_Mouseclick);
-                        pictureBoxArray[i, j].MouseHover += new EventHandler(this.pictureBox_MouseHover);
-                        pictureBoxArray[i, j].MouseLeave += new EventHandler(this.pictureBox_MouseLeave);
+                        // pictureBoxArray[i, j].MouseHover += new EventHandler(this.pictureBox_MouseHover);
+                        //  pictureBoxArray[i, j].MouseLeave += new EventHandler(this.pictureBox_MouseLeave);
                         this.Controls.Add(pictureBoxArray[i, j]);
                     }
 
@@ -149,6 +149,11 @@ namespace Ex05.OtheloUI
             pictureBox.BackColor = Color.Coral;
         }
 
+        /// <summary>
+        /// on mouse click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pictureBox_Mouseclick(object sender, EventArgs e)
         {
             PictureBox pb = (PictureBox)sender;
@@ -171,13 +176,13 @@ namespace Ex05.OtheloUI
                 {
                     ///TODO need to add here new draw of board function , all legality options should appear in green color 
                     ////if yes ,dont pick up a flag and do this:
-                    m_LegalMoveForFirstPlayer = true;
-                                  
-                    foreach(PictureBox pictureBox in m_ListOfLegalityBoardPictureBox)
-                    {
-                        pictureBox.Image = Properties.Resources.White;
-                    }
-                    m_ListOfLegalityBoardPictureBox.Clear();
+                    //m_LegalMoveForFirstPlayer = true;
+
+                    //foreach (PictureBox pictureBox in m_ListOfLegalityBoardPictureBox)
+                    //{
+                    //    pictureBox.Image = Properties.Resources.White;
+                    //}
+                    //m_ListOfLegalityBoardPictureBox.Clear();
 
                     // this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
                     char[] playerInput;
@@ -191,7 +196,7 @@ namespace Ex05.OtheloUI
                         player1Turn = false;
                         player2Turn = true;
                         this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
-                        clearPictureBoxArray();
+                    //    clearPictureBoxArray();
                         buildBoard();
 
                     }
@@ -210,9 +215,9 @@ namespace Ex05.OtheloUI
             }
 
 
-            else if (player2Turn == true)
+             if (player2Turn == true)
             {
-                this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
+              //  this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
                 if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
                 {
                     ////computer turn
@@ -251,6 +256,11 @@ namespace Ex05.OtheloUI
                     {
                         ////if yes ,dont pick up a flag and do this:
                         m_LegalMoveForSecondPlayer = true;
+                        //foreach (PictureBox pictureBox in m_ListOfLegalityBoardPictureBox)
+                        //{
+                        //    pictureBox.Image = Properties.Resources.White;
+                        //}
+                        //m_ListOfLegalityBoardPictureBox.Clear();
                         //  this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
                         char[] playerInput;
                         playerInput = pb.Name.ToCharArray();
@@ -270,7 +280,6 @@ namespace Ex05.OtheloUI
                             player1Turn = false;
                             player2Turn = true;
                             this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
-                            //  buildBoard();
 
                         }
                     }
@@ -302,7 +311,7 @@ namespace Ex05.OtheloUI
             isLegalMove = m_GameModel.LegalMove(i_player, pointToSend, eOnlyCheck.No);
             if (!isLegalMove)
             {
-                MessageBox.Show("Ilegal move, please choose legal move");
+               // MessageBox.Show("Ilegal move, please choose legal move");
                 isMooveSucceed = false;
 
             }
@@ -373,12 +382,15 @@ namespace Ex05.OtheloUI
             //}
             //while (inCorrectInput);
         }
+
         private void updateLegalityOptionOnPicturBox(Ex02_Othelo.Point i_Point)
         {
-            pictureBoxArray[i_Point.AxisXValue, i_Point.AxisYValue].Image = Properties.Resources.White;// Elad change it to Green
-            m_ListOfLegalityBoardPictureBox.Add(pictureBoxArray[i_Point.AxisXValue, i_Point.AxisYValue]);
+                    //  pictureBoxArray[i_Point.AxisXValue, i_Point.AxisYValue].Image = Properties.Resources.White;// Elad change it to Green
+                    pictureBoxArray[i_Point.AxisXValue, i_Point.AxisYValue].BackColor = Color.Green;
+                    m_ListOfLegalityBoardPictureBox.Add(pictureBoxArray[i_Point.AxisXValue, i_Point.AxisYValue]);
         }
 
+       
         private void clearPictureBoxArray()
         {
             for (int i = 1; i < m_BoardSize - 1; i++)

@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="Cell.cs" />
+    <Compile Include="DelegateContainer.cs" />
     <Compile Include="eBoardSize.cs" />
     <Compile Include="eGameMenu.cs" />
     <Compile Include="eOnlyCheck.cs" />
