@@ -11,6 +11,8 @@ namespace Ex05.OtheloUI
         static string m_FirstPlayerName;
         static string m_SecondPlayerName;
         static int m_BoardSize;
+        static int m_GameRoundFirstPlayerWinner = 0;
+        static int m_GameRoundSecondPlayerWinner = 0;
 
         public static int GameType
         {
@@ -21,6 +23,30 @@ namespace Ex05.OtheloUI
             set
             {
                 m_GameType = value;
+            }
+        }
+
+        public static int GameRoundFirstPlayer
+        {
+            get
+            {
+                return m_GameRoundFirstPlayerWinner;
+            }
+            set
+            {
+                m_GameRoundFirstPlayerWinner = value;
+            }
+        }
+
+        public static int GameRoundSecondPlayer
+        {
+            get
+            {
+                return m_GameRoundSecondPlayerWinner;
+            }
+            set
+            {
+                m_GameRoundSecondPlayerWinner = value;
             }
         }
 
