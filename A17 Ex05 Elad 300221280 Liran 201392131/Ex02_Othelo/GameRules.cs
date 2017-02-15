@@ -8,8 +8,8 @@ namespace Ex02_Othelo
         private Board m_Board = null;
         private Point? m_StartRange = null;
         private Point? m_EndRange = null;
-		private Random m_RandomGenerator = new Random();
-		private List<Point> m_LegalMovesForComputer = new List<Point>();
+        private Random m_RandomGenerator = new Random();
+        private List<Point> m_LegalMovesForComputer = new List<Point>();
         private List<int> m_ScoreList = new List<int>();
         public event DelegateContainer.Updater<char, Point> UpdatingSignValue;
         public event DelegateContainer.Updater<Point> UpdatingLegalityCellOption;
@@ -45,7 +45,6 @@ namespace Ex02_Othelo
         public bool ThereIsExisitingLegalMove(Player i_Player)
         {
             bool moveResult = false;
-			bool breakLoop = false;
             m_LegalMovesForComputer.Clear();
             for (int i = 1; i < m_Board.Boardsize - 1; i++)
             {
@@ -54,41 +53,33 @@ namespace Ex02_Othelo
                     if (m_Board.CellOnBoardByLocation(i, j).SignValue == (char)eGameSigns.None)
                     {
                         Point checkPoint = new Point(i, j);
-                        moveResult = LegalMove(i_Player, checkPoint, eOnlyCheck.Yes);
-                        if (moveResult)
+                       
+                        if (LegalMove(i_Player, checkPoint, eOnlyCheck.Yes))
                         {
-                            if (i_Player.PlayerType.Equals(eUserType.Computer))
-                            {
-                                m_LegalMovesForComputer.Add(checkPoint);
-                            }
-                            else
-                            {
-                                breakLoop = true;
-                                break;
-                            }
+                            moveResult = true;
+                        }
+
+                        if (i_Player.PlayerType.Equals(eUserType.Computer))
+                        {
+                            m_LegalMovesForComputer.Add(checkPoint);
                         }
                     }
                 }
-
-				if (breakLoop)
-				{
-					break;
-				}
             }
 
-			if (i_Player.PlayerType.Equals(eUserType.Computer))
-			{
-                moveResult = m_LegalMovesForComputer.Count > 0;	
-			}
-	
+            if (i_Player.PlayerType.Equals(eUserType.Computer))
+            {
+                moveResult = m_LegalMovesForComputer.Count > 0;
+            }
+
             return moveResult;
         }
 
         public bool LegalMove(Player i_Player)
-		{
-			bool moveResult = false;
-			Point randomPoint = m_LegalMovesForComputer[m_RandomGenerator.Next(m_LegalMovesForComputer.Count)];
-			moveResult = LegalMove(i_Player, randomPoint, eOnlyCheck.No);
+        {
+            bool moveResult = false;
+            Point randomPoint = m_LegalMovesForComputer[m_RandomGenerator.Next(m_LegalMovesForComputer.Count)];
+            moveResult = LegalMove(i_Player, randomPoint, eOnlyCheck.No);
             return moveResult;
         }
 
@@ -111,18 +102,18 @@ namespace Ex02_Othelo
             bool[] legalMoves = new bool[8];
             int indexLegalMove;
             indexLegalMove = 0;
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.UpperLeftDiagonal, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.UpperRow, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.UpperRightDiagonal, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.RightColoum, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.DownRightDiagonal, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.DownRow, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.DownLeftDiagonal, i_Mode);
-            legalMoves[indexLegalMove++] = UpdateBorder(i_Player, i_Point, eDirections.LeftColoumn, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBoard(i_Player, i_Point, eDirections.UpperLeftDiagonal, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBoard(i_Player, i_Point, eDirections.UpperRow, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBoard(i_Player, i_Point, eDirections.UpperRightDiagonal, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBoard(i_Player, i_Point, eDirections.RightColoum, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBoard(i_Player, i_Point, eDirections.DownRightDiagonal, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBoard(i_Player, i_Point, eDirections.DownRow, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBoard(i_Player, i_Point, eDirections.DownLeftDiagonal, i_Mode);
+            legalMoves[indexLegalMove++] = UpdateBoard(i_Player, i_Point, eDirections.LeftColoumn, i_Mode);
             return IndicateForLegalMoves(legalMoves);
         }
 
-		private bool UpdateBorder(Player i_Player, Point i_Point, eDirections i_Rule, eOnlyCheck i_Mode)
+        private bool UpdateBoard(Player i_Player, Point i_Point, eDirections i_Rule, eOnlyCheck i_Mode)
         {
             Point copyPoint = new Point(i_Point.AxisXValue, i_Point.AxisYValue);
             char washerAgainstPlayer = GetAgainstCurrentPlayerSign(i_Player);
@@ -331,7 +322,7 @@ namespace Ex02_Othelo
                 return m_ScoreList;
             }
         }
-       
+
         private void OnUpdateCellSignValue(char i_PlayerWasher, Point i_Point)
         {
             if (this.UpdatingSignValue != null)
@@ -342,10 +333,10 @@ namespace Ex02_Othelo
 
         private void OnUpdateCellOption(Point i_Point)
         {
-            if(this.UpdatingLegalityCellOption != null)
+            if (this.UpdatingLegalityCellOption != null)
             {
                 this.UpdatingLegalityCellOption(i_Point);
             }
         }
-    }  
+    }
 }
