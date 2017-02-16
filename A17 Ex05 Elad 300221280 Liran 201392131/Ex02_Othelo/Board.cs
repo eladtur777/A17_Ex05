@@ -14,11 +14,10 @@ namespace Ex02_Othelo
         {
             m_Size = i_Size + 2;
 			m_ArrayCell = new Cell[m_Size, m_Size];
-            InitBoard();
-            //BuildConsoleBoard();
+            initBoard();
         }
 
-        private void InitBoard()
+        private void initBoard()
         {
 			for (int i = 0; i < m_Size; i++)
 			{
@@ -42,6 +41,20 @@ namespace Ex02_Othelo
 				m_ArrayCell[4, 4].SignValue = (char)eGameSigns.O;
 				m_ArrayCell[5, 5].SignValue = (char)eGameSigns.O;
 				}
+            else if (m_Size == (int)eBoardSize.Twelve)
+            {
+                m_ArrayCell[5, 6].SignValue = (char)eGameSigns.X;
+                m_ArrayCell[6, 5].SignValue = (char)eGameSigns.X;
+                m_ArrayCell[5, 5].SignValue = (char)eGameSigns.O;
+                m_ArrayCell[6, 6].SignValue = (char)eGameSigns.O;
+            }
+            else if (m_Size == (int)eBoardSize.Fourteen)
+            {
+                m_ArrayCell[6, 7].SignValue = (char)eGameSigns.X;
+                m_ArrayCell[7, 6].SignValue = (char)eGameSigns.X;
+                m_ArrayCell[6, 6].SignValue = (char)eGameSigns.O;
+                m_ArrayCell[7, 7].SignValue = (char)eGameSigns.O;
+            }
         }
 
         public void UpdateSignCellOnBoardByPoint(char i_Sign, Point i_point)
