@@ -24,6 +24,7 @@ namespace Ex05.OtheloUI
         private List<PictureBox> m_ListOfLegalityBoardPictureBox = new List<PictureBox>();
         private bool m_EmptyLegalMoveForFirstPlayer = false;
         private bool m_EmptyLegalMoveForSecondPlayer = false;
+
         public Game()
         {
             this.m_GameModel = new GameModel(GameController.BoardSize, GameController.FirstPlayerName, GameController.SecondPlayerName);
@@ -167,7 +168,7 @@ namespace Ex05.OtheloUI
                         {
                             player1Turn = true;
                         }
-                        MessageBox.Show("No moves for Yellow");
+                        MessageBox.Show(string.Format("No legals mooves for {0}", this.m_GameModel.SecondPlayer.PlayerName));
                         this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
 
                     }
@@ -187,7 +188,7 @@ namespace Ex05.OtheloUI
                         {
                             player1Turn = false;
                         }
-                        MessageBox.Show("No moves for Red");
+                        MessageBox.Show(string.Format("No legals mooves for {0}",this.m_GameModel.FirstPlayer.PlayerName));
                         this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
 
                     }
@@ -197,7 +198,7 @@ namespace Ex05.OtheloUI
             }
             else
             {
-                MessageBox.Show("not legal move in buffer");
+                MessageBox.Show("Please Choose legal moove button (green buttons for possible legal mooves)");
             }
 
             //if(!this.player1Turn && m_ListOfLegalityBoardPictureBox.Count == 0)
