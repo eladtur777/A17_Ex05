@@ -160,19 +160,28 @@ namespace Ex05.OtheloUI
             PictureBox pictureBox = (PictureBox)sender;
             if (m_ListOfLegalityBoardPictureBox.Contains(pictureBox))
             {
-                if (player1Turn == true)
+                if (!m_GameModel.ThereIsExisitingLegalMove(m_GameModel.SecondPlayer) && !m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer))
                 {
-                    firstPlayerTurn(pictureBox);
-                    clearLegalityMovesList();
-                    m_GameModel.ThereIsExisitingLegalMove(m_GameModel.SecondPlayer);
-                    this.Show();
+                    GameOver();
                 }
+
                 else
                 {
-                    secondPlayerTurn(pictureBox);
-                    clearLegalityMovesList();
-                    m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer);
-                    this.Show();
+
+                    if (player1Turn == true)
+                    {
+                        firstPlayerTurn(pictureBox);
+                        clearLegalityMovesList();
+                        m_GameModel.ThereIsExisitingLegalMove(m_GameModel.SecondPlayer);
+                        this.Show();
+                    }
+                    else
+                    {
+                        secondPlayerTurn(pictureBox);
+                        clearLegalityMovesList();
+                        m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer);
+                        this.Show();
+                    }
                 }
             }
         }
