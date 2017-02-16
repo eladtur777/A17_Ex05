@@ -34,6 +34,7 @@ namespace Ex05.OtheloUI
             m_GameModel.TrnsferingSignValueUpdate += UpdateCoinToPictureBox;
             m_GameModel.TrnsferingLegalityCellOption += updateLegalityOptionOnPicturBox;
             callTheWinner = new StringBuilder();
+            this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
         }
 
         private void InitializeComponent()
@@ -175,11 +176,10 @@ namespace Ex05.OtheloUI
                 }
                 else
                 {
-                    secondPlayerTurn(pictureBox);
-                    clearLegalityMovesList();
-                    m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer);
-                    this.Show();
-
+                        secondPlayerTurn(pictureBox);
+                        clearLegalityMovesList();
+                        m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer);
+                        this.Show();
                 }
             }
         }
@@ -188,7 +188,7 @@ namespace Ex05.OtheloUI
         {
             this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
             ////first check if there is legal mooves for the first player in all board
-            if (m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer) == false)
+            if (!m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer))////liran ,this is return true all the time...
             {
                 m_LegalMoveForFirstPlayer = false;
                 MessageBox.Show(string.Format("{0} you out of moves", m_GameModel.FirstPlayer.PlayerName));
@@ -212,6 +212,7 @@ namespace Ex05.OtheloUI
 
                     if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
                     {
+                        this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
                         computerTurn(i_PictureBox);
                     }
                 }
@@ -228,6 +229,7 @@ namespace Ex05.OtheloUI
 
         private void secondPlayerTurn(PictureBox i_PictureBox)
         {
+
             if (m_GameModel.ThereIsExisitingLegalMove(m_GameModel.SecondPlayer))
             {
                 m_LegalMoveForSecondPlayer = true;
@@ -270,14 +272,21 @@ namespace Ex05.OtheloUI
 
         private void computerTurn(PictureBox i_PictureBox)
         {
-            //// first check if there is legal mooves for computer in all board
             if (m_GameModel.ThereIsExisitingLegalMove(m_GameModel.SecondPlayer))
             {
                 m_LegalMoveForSecondPlayer = true;
-                m_GameModel.LegalMove(m_GameModel.SecondPlayer);
-                player1Turn = true;
-                this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
+                clearLegalityMovesList();
+                ////liran, this is return false all the time...
+                if (m_GameModel.LegalMove(m_GameModel.SecondPlayer))
+                {
+                    player1Turn = true;
+                    this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
+                }
+
+               
             }
+
+            //no legal moove
             else
             {
                 m_LegalMoveForSecondPlayer = false;
@@ -285,9 +294,10 @@ namespace Ex05.OtheloUI
                 {
                     GameOver();
                 }
+
                 else if (!m_LegalMoveForSecondPlayer)
                 {
-                    MessageBox.Show("Computer out of moves");
+                    MessageBox.Show(string.Format("{0} out of moves", m_GameModel.SecondPlayer));
                     this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
                     player1Turn = true;
                 }
