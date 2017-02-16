@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -82,8 +80,6 @@ namespace Ex05.OtheloUI
                         pictureBoxArray[i, j].Location = pictureLocation;
                         pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
                         pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
-                        //    pictureBoxarray[i, j].Click += new EventHandler(this.pictureBox_Mouseclick);
-                        //  this.Controls.Add(pictureBoxArray[i, j]);
                         this.panel1.Controls.Add(pictureBoxArray[i, j]);
 
                     }
@@ -97,8 +93,6 @@ namespace Ex05.OtheloUI
                         pictureBoxArray[i, j].Location = pictureLocation;
                         pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
                         pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
-                        //  pictureBoxarray[i, j].Click += new EventHandler(this.pictureBox_Mouseclick);
-                        //    this.Controls.Add(pictureBoxArray[i, j]);
                         this.panel1.Controls.Add(pictureBoxArray[i, j]);
 
 
@@ -116,7 +110,6 @@ namespace Ex05.OtheloUI
                         pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
                         pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
                         pictureBoxArray[i, j].Click += new EventHandler(this.pictureBox_Mouseclick);
-                        //  this.Controls.Add(pictureBoxArray[i, j]);
                         this.panel1.Controls.Add(pictureBoxArray[i, j]);
                     }
 
@@ -176,10 +169,10 @@ namespace Ex05.OtheloUI
                 }
                 else
                 {
-                        secondPlayerTurn(pictureBox);
-                        clearLegalityMovesList();
-                        m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer);
-                        this.Show();
+                    secondPlayerTurn(pictureBox);
+                    clearLegalityMovesList();
+                    m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer);
+                    this.Show();
                 }
             }
         }
@@ -283,7 +276,7 @@ namespace Ex05.OtheloUI
                     this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
                 }
 
-               
+
             }
 
             //no legal moove
