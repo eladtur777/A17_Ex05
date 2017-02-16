@@ -66,7 +66,7 @@ namespace Ex05.OtheloUI
 
         private void buildBoard()
         {
-    
+
             for (int i = 1; i < m_BoardSize - 1; i++)
             {
                 for (int j = 1; j < m_BoardSize - 1; j++)
@@ -82,7 +82,7 @@ namespace Ex05.OtheloUI
                         pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
                         pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
                         //    pictureBoxarray[i, j].Click += new EventHandler(this.pictureBox_Mouseclick);
-                      //  this.Controls.Add(pictureBoxArray[i, j]);
+                        //  this.Controls.Add(pictureBoxArray[i, j]);
                         this.panel1.Controls.Add(pictureBoxArray[i, j]);
 
                     }
@@ -97,7 +97,7 @@ namespace Ex05.OtheloUI
                         pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
                         pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
                         //  pictureBoxarray[i, j].Click += new EventHandler(this.pictureBox_Mouseclick);
-                    //    this.Controls.Add(pictureBoxArray[i, j]);
+                        //    this.Controls.Add(pictureBoxArray[i, j]);
                         this.panel1.Controls.Add(pictureBoxArray[i, j]);
 
 
@@ -151,7 +151,7 @@ namespace Ex05.OtheloUI
             buildBoard();
             m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer);
         }
-       
+
         private void clearLegalityMovesList()
         {
             foreach (PictureBox pictureBox in m_ListOfLegalityBoardPictureBox)
@@ -163,7 +163,6 @@ namespace Ex05.OtheloUI
 
         private void pictureBox_Mouseclick(object sender, EventArgs e)
         {
-            GameOver();
             PictureBox pictureBox = (PictureBox)sender;
             if (m_ListOfLegalityBoardPictureBox.Contains(pictureBox))
             {
@@ -180,7 +179,7 @@ namespace Ex05.OtheloUI
                     clearLegalityMovesList();
                     m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer);
                     this.Show();
-   
+
                 }
             }
         }
@@ -189,13 +188,13 @@ namespace Ex05.OtheloUI
         {
             this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
             ////first check if there is legal mooves for the first player in all board
-            if (!m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer))
+            if (m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer) == false)
             {
                 m_LegalMoveForFirstPlayer = false;
                 MessageBox.Show(string.Format("{0} you out of moves", m_GameModel.FirstPlayer.PlayerName));
                 this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
                 player1Turn = false;
-       
+
             }
 
             else
@@ -242,6 +241,7 @@ namespace Ex05.OtheloUI
                     this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
                 }
 
+                ////player 2 turn again- because of bad legal moove chose
                 else
                 {
                     player1Turn = false;
@@ -257,6 +257,7 @@ namespace Ex05.OtheloUI
                 {
                     GameOver();
                 }
+
                 else if (!m_LegalMoveForSecondPlayer)
                 {
                     MessageBox.Show(string.Format("{0} out of moves", m_GameModel.SecondPlayer));
@@ -354,19 +355,16 @@ namespace Ex05.OtheloUI
 
         private void CallTheWinner(int i_FirstPlayerScore, int i_SecondPlayerScore)
         {
-           // StringBuilder callTheWinner = new StringBuilder();
             if (i_FirstPlayerScore > i_SecondPlayerScore)
             {
                 GameController.GameRoundFirstPlayer++;
                 callTheWinner.Append(string.Format("{0} Won!!! ({1}/{2})({3}/{4}){5}", m_GameModel.FirstPlayer.PlayerName, i_FirstPlayerScore, i_SecondPlayerScore, GameController.GameRoundSecondPlayer, GameController.GameRoundFirstPlayer, Environment.NewLine));
-    
             }
 
             if (i_FirstPlayerScore < i_SecondPlayerScore)
             {
                 GameController.GameRoundSecondPlayer++;
                 callTheWinner.Append(string.Format("{0} Won!!! ({1}/{2})({3}/{4}){5}", m_GameModel.SecondPlayer.PlayerName, i_SecondPlayerScore, i_FirstPlayerScore, GameController.GameRoundFirstPlayer, GameController.GameRoundSecondPlayer, Environment.NewLine));
-              
             }
 
             if (i_FirstPlayerScore == i_SecondPlayerScore)
@@ -382,7 +380,6 @@ namespace Ex05.OtheloUI
 
         public void exitApplication()
         {
-
             if (MessageBox.Show(callTheWinner.ToString(), "Othello",
                   MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                   == DialogResult.No)

@@ -56,9 +56,6 @@
     <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Ex02.ConsoleUtils">
-      <HintPath>C:\Temp\Ex02.ConsoleUtils.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>

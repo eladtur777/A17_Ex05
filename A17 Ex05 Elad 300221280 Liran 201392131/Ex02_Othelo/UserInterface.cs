@@ -9,7 +9,7 @@ namespace Ex02_Othelo
         private static int m_GetUserBoardSize = 0;
         private static int m_GetUserGameType = 0;
         private GameModel m_Game;
-        private string m_FirstPlayerName;
+      //  private string m_FirstPlayerName;
         private bool m_LegalMoveForFirstPlayer = true;
         private bool m_LegalMoveForSecondPlayer = true;
 
