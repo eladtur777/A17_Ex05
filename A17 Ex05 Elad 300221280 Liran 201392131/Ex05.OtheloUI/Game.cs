@@ -15,6 +15,7 @@ namespace Ex05.OtheloUI
         private GameModel m_GameModel;
         private Ex02_Othelo.Point m_PointForMouseHoverAndLeave;
         private bool player1Turn = true;
+        private bool isLegalMoove = false;
         private StringBuilder callTheWinner;
         private bool m_LegalMoveForFirstPlayer = true;
         private bool m_LegalMoveForSecondPlayer = true;
@@ -160,13 +161,13 @@ namespace Ex05.OtheloUI
             PictureBox pictureBox = (PictureBox)sender;
             if (m_ListOfLegalityBoardPictureBox.Contains(pictureBox))
             {
-                if (!m_GameModel.ThereIsExisitingLegalMove(m_GameModel.SecondPlayer) && !m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer))
-                {
-                    GameOver();
-                }
+                //if (!m_GameModel.ThereIsExisitingLegalMove(m_GameModel.SecondPlayer) && !m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer))
+                //{
+                //    GameOver();
+                //}
 
-                else
-                {
+                //else
+               // {
 
                     if (player1Turn == true)
                     {
@@ -174,13 +175,26 @@ namespace Ex05.OtheloUI
                         clearLegalityMovesList();
                         m_GameModel.ThereIsExisitingLegalMove(m_GameModel.SecondPlayer);
                         this.Show();
-                    }
+
+
+                        if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
+                        {
+                            this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
+                            computerTurn();
+                            clearLegalityMovesList();
+                            m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer);
+                            this.Show();
+                        }
+
+
+                  //  }
                     else
                     {
-                        secondPlayerTurn(pictureBox);
-                        clearLegalityMovesList();
-                        m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer);
-                        this.Show();
+                      
+                            secondPlayerTurn(pictureBox);
+                            clearLegalityMovesList();
+                            m_GameModel.ThereIsExisitingLegalMove(m_GameModel.FirstPlayer);
+                            this.Show();
                     }
                 }
             }
@@ -205,18 +219,12 @@ namespace Ex05.OtheloUI
                 char[] playerInput;
                 playerInput = i_PictureBox.Name.ToCharArray();
                 clearLegalityMovesList();
-                bool isLegalMoove = UpdateBoard(playerInput, m_GameModel.FirstPlayer);
+                isLegalMoove = UpdateBoard(playerInput, m_GameModel.FirstPlayer);
 
                 if (isLegalMoove)
                 {
                     player1Turn = false;
                     this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
-
-                    if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
-                    {
-                        this.Text = string.Format("Othello - {0} turn", m_GameModel.SecondPlayer.PlayerName);
-                        computerTurn(i_PictureBox);
-                    }
                 }
 
                 ////player 1 turn again- because of bad legal moove chose
@@ -227,6 +235,8 @@ namespace Ex05.OtheloUI
 
                 }
             }
+
+           
         }
 
         private void secondPlayerTurn(PictureBox i_PictureBox)
@@ -272,7 +282,7 @@ namespace Ex05.OtheloUI
         }
 
 
-        private void computerTurn(PictureBox i_PictureBox)
+        private void computerTurn()
         {
             if (m_GameModel.ThereIsExisitingLegalMove(m_GameModel.SecondPlayer))
             {
@@ -283,8 +293,9 @@ namespace Ex05.OtheloUI
                 {
                     player1Turn = true;
                     this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
-                }
 
+                }
+                player1Turn = true;
 
             }
 
