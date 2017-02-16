@@ -30,41 +30,55 @@ namespace Ex05.OtheloUI
             // 
             // boardSizeButton
             // 
-            this.boardSizeButton.Location = new System.Drawing.Point(63, 39);
+            this.boardSizeButton.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.boardSizeButton.Font = new System.Drawing.Font("David", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.boardSizeButton.Location = new System.Drawing.Point(43, 39);
             this.boardSizeButton.Name = "boardSizeButton";
-            this.boardSizeButton.Size = new System.Drawing.Size(252, 39);
+            this.boardSizeButton.Size = new System.Drawing.Size(273, 39);
             this.boardSizeButton.TabIndex = 0;
             this.boardSizeButton.Text = "Board size:6x6 (click to increase)";
-            this.boardSizeButton.UseVisualStyleBackColor = true;
+            this.boardSizeButton.UseVisualStyleBackColor = false;
             this.boardSizeButton.Click += new System.EventHandler(this.boardSizeButton_Click);
+            this.boardSizeButton.MouseLeave += new System.EventHandler(this.boardSizeButton_MouseLeave);
+            this.boardSizeButton.MouseHover += new System.EventHandler(this.boardSizeButton_MouseHover);
             // 
             // playerVsComputerButton
             // 
-            this.playerVsComputerButton.Location = new System.Drawing.Point(63, 84);
+            this.playerVsComputerButton.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.playerVsComputerButton.Font = new System.Drawing.Font("David", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.playerVsComputerButton.Location = new System.Drawing.Point(53, 84);
             this.playerVsComputerButton.Name = "playerVsComputerButton";
-            this.playerVsComputerButton.Size = new System.Drawing.Size(116, 49);
+            this.playerVsComputerButton.Size = new System.Drawing.Size(126, 49);
             this.playerVsComputerButton.TabIndex = 1;
             this.playerVsComputerButton.Text = "Play againts the Computer";
-            this.playerVsComputerButton.UseVisualStyleBackColor = true;
+            this.playerVsComputerButton.UseVisualStyleBackColor = false;
             this.playerVsComputerButton.Click += new System.EventHandler(this.playerVsComputerButton_Click);
+            this.playerVsComputerButton.MouseLeave += new System.EventHandler(this.playerVsComputerButton_MouseLeave);
+            this.playerVsComputerButton.MouseHover += new System.EventHandler(this.playerVsComputerButton_MouseHover);
             // 
             // PlayerVsPlayerButton
             // 
-            this.PlayerVsPlayerButton.Location = new System.Drawing.Point(195, 84);
+            this.PlayerVsPlayerButton.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.PlayerVsPlayerButton.Font = new System.Drawing.Font("David", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.PlayerVsPlayerButton.Location = new System.Drawing.Point(185, 84);
             this.PlayerVsPlayerButton.Name = "PlayerVsPlayerButton";
             this.PlayerVsPlayerButton.Size = new System.Drawing.Size(120, 49);
             this.PlayerVsPlayerButton.TabIndex = 2;
             this.PlayerVsPlayerButton.Text = "Play againts your friend";
-            this.PlayerVsPlayerButton.UseVisualStyleBackColor = true;
+            this.PlayerVsPlayerButton.UseVisualStyleBackColor = false;
             this.PlayerVsPlayerButton.Click += new System.EventHandler(this.PlayerVsPlayerButton_Click);
+            this.PlayerVsPlayerButton.MouseLeave += new System.EventHandler(this.PlayerVsPlayerButton_MouseLeave);
+            this.PlayerVsPlayerButton.MouseHover += new System.EventHandler(this.PlayerVsPlayerButton_MouseHover);
             // 
             // GameSettingsForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
-            this.ClientSize = new System.Drawing.Size(360, 166);
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ClientSize = new System.Drawing.Size(353, 166);
             this.Controls.Add(this.PlayerVsPlayerButton);
             this.Controls.Add(this.playerVsComputerButton);
             this.Controls.Add(this.boardSizeButton);
+            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -114,6 +128,36 @@ namespace Ex05.OtheloUI
             this.Close();
             m_gameForm = new Game();
             m_gameForm.ShowDialog();
+        }
+
+        private void boardSizeButton_MouseHover(object sender, EventArgs e)
+        {
+            this.boardSizeButton.BackColor = Color.CadetBlue;
+        }
+
+        private void boardSizeButton_MouseLeave(object sender, EventArgs e)
+        {
+            this.boardSizeButton.BackColor = Color.DarkSeaGreen;
+        }
+
+        private void PlayerVsPlayerButton_MouseHover(object sender, EventArgs e)
+        {
+            this.PlayerVsPlayerButton.BackColor = Color.CadetBlue;
+        }
+
+        private void PlayerVsPlayerButton_MouseLeave(object sender, EventArgs e)
+        {
+            this.PlayerVsPlayerButton.BackColor = Color.DarkSeaGreen;
+        }
+
+        private void playerVsComputerButton_MouseHover(object sender, EventArgs e)
+        {
+            this.playerVsComputerButton.BackColor = Color.CadetBlue;
+        }
+
+        private void playerVsComputerButton_MouseLeave(object sender, EventArgs e)
+        {
+            this.playerVsComputerButton.BackColor = Color.DarkSeaGreen;
         }
     }
 }
