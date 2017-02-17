@@ -12,6 +12,7 @@ namespace Ex02_Othelo
         private StringBuilder m_BoardGame = new StringBuilder();
         public event DelegateContainer.Updater<char, Point> TrnsferingSignValueUpdate;
         public event DelegateContainer.Updater<Point> TrnsferingLegalityCellOption;
+
         public GameModel(int i_BoardSize, string i_FirstPlayerName, string i_SecondPlayerName)
         {
             m_FirstPlayer = new Player(i_FirstPlayerName);

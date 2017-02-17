@@ -100,7 +100,7 @@ namespace Ex05.OtheloUI
                         this.pictureBoxArray[i, j].Margin = new Padding(k_SpaceBetweenPictures);
                         this.pictureBoxArray[i, j].Visible = true;
                         this.pictureBoxArray[i, j].Location = this.pictureLocation;
-                        this.pictureBoxArray[i, j].Name = string.Format("{0}{1}", i, j);
+                        this.pictureBoxArray[i, j].Name = string.Format("{0},{1}", i, j);
                         this.pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
                         this.pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
                         this.pictureBoxArray[i, j].Click += new EventHandler(this.pictureBox_Mouseclick);
@@ -155,7 +155,7 @@ namespace Ex05.OtheloUI
             if (this.m_ListOfLegalityBoardPictureBox.Contains(pictureBox))
             {
                 if (this.player1Turn == true)
-                { 
+                {
                     this.firstPlayerTurn(pictureBox);
                     this.clearLegalityMovesList();
                     if (!this.m_GameModel.ThereIsExisitingLegalMove(this.m_GameModel.SecondPlayer))
@@ -168,12 +168,12 @@ namespace Ex05.OtheloUI
                         {
                             player1Turn = true;
                         }
-                        MessageBox.Show(string.Format("No legals mooves for {0}", this.m_GameModel.SecondPlayer.PlayerName));
+                      //  MessageBox.Show(string.Format("No legals mooves for {0}", this.m_GameModel.SecondPlayer.PlayerName));
                         this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
 
                     }
                     this.Show();
-              }
+                }
                 else
                 {
                     this.secondPlayerTurn(pictureBox);
@@ -188,12 +188,11 @@ namespace Ex05.OtheloUI
                         {
                             player1Turn = false;
                         }
-                        MessageBox.Show(string.Format("No legals mooves for {0}",this.m_GameModel.FirstPlayer.PlayerName));
+                      //  MessageBox.Show(string.Format("No legals mooves for {0}", this.m_GameModel.FirstPlayer.PlayerName));
                         this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
 
                     }
-                       this.Show();
-
+                    this.Show();
                 }
             }
             else
@@ -201,138 +200,78 @@ namespace Ex05.OtheloUI
                 MessageBox.Show("Please Choose legal moove button (green buttons for possible legal mooves)");
             }
 
-            //if(!this.player1Turn && m_ListOfLegalityBoardPictureBox.Count == 0)
-            //{
-            //  m_EmptyLegalMoveForSecondPlayer = true;
-            //    if(m_EmptyLegalMoveForFirstPlayer)
-            //    {
-            //        GameOver();
-            //    }
-            //}
-            //else if(this.player1Turn && m_ListOfLegalityBoardPictureBox.Count == 0)
-            //{
-            //    m_EmptyLegalMoveForFirstPlayer = true;
-            //    if (m_EmptyLegalMoveForSecondPlayer)
-            //    {
-            //        GameOver();
-            //    }
-            //}
-
         }
 
         private void firstPlayerTurn(PictureBox i_PictureBox)
         {
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
-            ////first check if there is legal mooves for the first player in all board
-            //if (!this.m_GameModel.ThereIsExisitingLegalMove(this.m_GameModel.FirstPlayer))////liran ,this is return true all the time...
-            //{
-            //    this.m_LegalMoveForFirstPlayer = false;
-            //    MessageBox.Show(string.Format("{0} you out of moves", this.m_GameModel.FirstPlayer.PlayerName));
-            //    this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
-            //    this.player1Turn = false;
-            //}
-            //else
-            //{
-                this.m_LegalMoveForFirstPlayer = true;
-                char[] playerInput;
-                playerInput = i_PictureBox.Name.ToCharArray();
-                this.clearLegalityMovesList();
-                this.UpdateBoard(playerInput, this.m_GameModel.FirstPlayer);
+            this.m_LegalMoveForFirstPlayer = true;
+          
+            char[] playerInput = {' ',',',' '};
+            //playerInput = i_PictureBox.Name.ToCharArray();
+            string[] coordinates = i_PictureBox.Name.Split(playerInput);
+            this.clearLegalityMovesList();
+            this.UpdateBoard(coordinates, this.m_GameModel.FirstPlayer);
 
-                //if (isLegalMoove)
-                //{
-                    this.player1Turn = false;
-                    this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
 
-                    if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
-                    {
-                        this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
-                        this.computerTurn(i_PictureBox);
-                    }
-              //  }
-                //else
-                //{
-                //    ////player 1 turn again- because of bad legal moove chose
-                //    this.player1Turn = true;
-                //    this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
-                //}
-            
+            this.player1Turn = false;
+            this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
+
+            if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
+            {
+                this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
+                this.computerTurn(i_PictureBox);
+            }
         }
 
         private void secondPlayerTurn(PictureBox i_PictureBox)
         {
-            //if (this.m_GameModel.ThereIsExisitingLegalMove(this.m_GameModel.SecondPlayer))
-            //{
-                this.m_LegalMoveForSecondPlayer = true;
-                char[] playerInput;
-                playerInput = i_PictureBox.Name.ToCharArray();
-                this.clearLegalityMovesList();
-                this.UpdateBoard(playerInput, this.m_GameModel.SecondPlayer);
-                //if (isLegalMoove)
-                //{
-                    this.player1Turn = true;
-                    this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
-              //  }
-              //  else
-               // {
-                    ////player 2 turn again- because of bad legal moove chose
-                    //this.player1Turn = false;
-                    //this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
-               // }
-         //   }
-            //else
-            //{
-            //    ////no legal moove
-            //    this.m_LegalMoveForSecondPlayer = false;
-            //    if (!this.m_LegalMoveForFirstPlayer && !this.m_LegalMoveForSecondPlayer)
-            //    {
-            //        this.GameOver();
-            //    }
-            //    else if (!this.m_LegalMoveForSecondPlayer)
-            //    {
-            //        MessageBox.Show(string.Format("{0} out of moves", this.m_GameModel.SecondPlayer));
-            //        this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
-            //        this.player1Turn = true;
-            //    }
-            //}
+            this.m_LegalMoveForSecondPlayer = true;
+            char[] playerInput = { ' ', ',', ' ' };
+           // playerInput = i_PictureBox.Name.ToCharArray();
+            string[] coordinates = i_PictureBox.Name.Split(playerInput);
+            this.clearLegalityMovesList();
+            this.UpdateBoard(coordinates, this.m_GameModel.SecondPlayer);
+            this.player1Turn = true;
+            this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
         }
 
         private void computerTurn(PictureBox i_PictureBox)
         {
-           // if (m_GameModel.ThereIsExisitingLegalMove(m_GameModel.SecondPlayer))
-           // {
-                this.m_LegalMoveForSecondPlayer = true;
-                this.clearLegalityMovesList();
-                ////liran, this is return false all the time...
-                if (this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer))
-                {
-                    player1Turn = true;
-                    this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
-                }
-          //  }
-            //else
-            //{
-            //    ////no legal moove
-            //    this.m_LegalMoveForSecondPlayer = false;
-            //    if (!this.m_LegalMoveForFirstPlayer && !this.m_LegalMoveForSecondPlayer)
-            //    {
-            //        this.GameOver();
-            //    }
-            //    else if (!m_LegalMoveForSecondPlayer)
-            //    {
-            //        MessageBox.Show(string.Format("{0} out of moves", m_GameModel.SecondPlayer));
-            //        this.Text = string.Format("Othello - {0} turn", m_GameModel.FirstPlayer.PlayerName);
-            //        player1Turn = true;
-            //    }
-            //}
+            this.m_LegalMoveForSecondPlayer = true;
+            this.clearLegalityMovesList();
+            this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer as Player);
+            this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
+            player1Turn = true;
+            this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
+
         }
 
-        private bool UpdateBoard(char[] i_charArray, Player i_player)
+        private bool UpdateBoard(string[] i_Coordinate, Player i_player)
         {
+            int countCoordinates = 0;
+            int firstCoordinate = 0;
+            int secondCoordinate = 0;
             bool isMooveSucceed = true;
             EnumLettersToNumbers m_ConvertPlayerLetter = new EnumLettersToNumbers();
             bool isLegalMove = false;
-            Ex02_Othelo.Point pointToSend = new Ex02_Othelo.Point(i_charArray[0] - '0', i_charArray[1] - '0');
+
+            foreach (string coordinate in i_Coordinate)
+            {
+                if (countCoordinates == 0)
+                {
+                    firstCoordinate = int.Parse(coordinate);
+                }
+
+                countCoordinates++;
+
+                if (countCoordinates == 2)
+                {
+                    secondCoordinate = int.Parse(coordinate);
+                }
+            }
+
+            Ex02_Othelo.Point pointToSend = new Ex02_Othelo.Point(firstCoordinate, secondCoordinate);
             isLegalMove = m_GameModel.LegalMove(i_player, pointToSend, eOnlyCheck.No);
             if (!isLegalMove)
             {
@@ -380,10 +319,8 @@ namespace Ex05.OtheloUI
                 {
                     pictureBoxArray[i, j].Image = null;
                     pictureBoxArray[i, j].Invalidate();
-
                 }
             }
-
         }
 
         private void CallTheWinner(int i_FirstPlayerScore, int i_SecondPlayerScore)
@@ -419,7 +356,6 @@ namespace Ex05.OtheloUI
             {
                 Application.Exit();
             }
-
             else
             {
                 this.Close();
