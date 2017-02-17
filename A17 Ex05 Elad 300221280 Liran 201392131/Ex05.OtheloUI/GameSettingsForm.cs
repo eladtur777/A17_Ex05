@@ -16,6 +16,7 @@ namespace Ex05.OtheloUI
         private Button PlayerVsPlayerButton;
         private int m_BoardSize = 6;
         private Game m_gameForm;
+
         public GameSettingsForm()
         {
             InitializeComponent();

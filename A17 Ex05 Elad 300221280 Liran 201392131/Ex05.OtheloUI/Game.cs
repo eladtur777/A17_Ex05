@@ -17,13 +17,9 @@ namespace Ex05.OtheloUI
         private Ex02_Othelo.Point m_PointForMouseHoverAndLeave;
         private bool player1Turn = true;
         private StringBuilder callTheWinner;
-        private bool m_LegalMoveForFirstPlayer = true;
-        private bool m_LegalMoveForSecondPlayer = true;
         private System.Drawing.Point pictureLocation;
         private Panel panel1;
         private List<PictureBox> m_ListOfLegalityBoardPictureBox = new List<PictureBox>();
-        private bool m_EmptyLegalMoveForFirstPlayer = false;
-        private bool m_EmptyLegalMoveForSecondPlayer = false;
 
         public Game()
         {
@@ -168,7 +164,7 @@ namespace Ex05.OtheloUI
                         {
                             player1Turn = true;
                         }
-                      //  MessageBox.Show(string.Format("No legals mooves for {0}", this.m_GameModel.SecondPlayer.PlayerName));
+                        MessageBox.Show(string.Format("No legals mooves for {0}", this.m_GameModel.SecondPlayer.PlayerName));
                         this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
 
                     }
@@ -188,7 +184,7 @@ namespace Ex05.OtheloUI
                         {
                             player1Turn = false;
                         }
-                      //  MessageBox.Show(string.Format("No legals mooves for {0}", this.m_GameModel.FirstPlayer.PlayerName));
+                        MessageBox.Show(string.Format("No legals mooves for {0}", this.m_GameModel.FirstPlayer.PlayerName));
                         this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
 
                     }
@@ -205,47 +201,51 @@ namespace Ex05.OtheloUI
         private void firstPlayerTurn(PictureBox i_PictureBox)
         {
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
-            this.m_LegalMoveForFirstPlayer = true;
-          
             char[] playerInput = {' ',',',' '};
-            //playerInput = i_PictureBox.Name.ToCharArray();
             string[] coordinates = i_PictureBox.Name.Split(playerInput);
             this.clearLegalityMovesList();
             this.UpdateBoard(coordinates, this.m_GameModel.FirstPlayer);
-
-
             this.player1Turn = false;
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
 
             if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
             {
                 this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
-                this.computerTurn(i_PictureBox);
+                //   this.computerTurn(i_PictureBox);
+                this.secondPlayerTurn(i_PictureBox); 
             }
         }
 
         private void secondPlayerTurn(PictureBox i_PictureBox)
         {
-            this.m_LegalMoveForSecondPlayer = true;
-            char[] playerInput = { ' ', ',', ' ' };
-           // playerInput = i_PictureBox.Name.ToCharArray();
-            string[] coordinates = i_PictureBox.Name.Split(playerInput);
-            this.clearLegalityMovesList();
-            this.UpdateBoard(coordinates, this.m_GameModel.SecondPlayer);
-            this.player1Turn = true;
-            this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
+            //char[] playerInput = { ' ', ',', ' ' };
+            //string[] coordinates = i_PictureBox.Name.Split(playerInput);
+          //  this.clearLegalityMovesList();
+            if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
+            {
+                this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer);
+                this.player1Turn = true;
+                this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
+            }
+            else
+            {
+                char[] playerInput = { ' ', ',', ' ' };
+                string[] coordinates = i_PictureBox.Name.Split(playerInput);
+                this.clearLegalityMovesList();
+                this.UpdateBoard(coordinates, this.m_GameModel.SecondPlayer);
+                this.player1Turn = true;
+                this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
+            }
         }
 
-        private void computerTurn(PictureBox i_PictureBox)
-        {
-            this.m_LegalMoveForSecondPlayer = true;
-            this.clearLegalityMovesList();
-            this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer as Player);
-            this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
-            player1Turn = true;
-            this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
-
-        }
+        //private void computerTurn(PictureBox i_PictureBox)
+        //{
+        //    this.clearLegalityMovesList();
+        //    this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer);
+        //    this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
+        //    player1Turn = true;
+        //    this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
+        //}
 
         private bool UpdateBoard(string[] i_Coordinate, Player i_player)
         {
