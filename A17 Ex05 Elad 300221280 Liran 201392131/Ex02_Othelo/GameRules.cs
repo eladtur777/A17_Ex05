@@ -57,12 +57,11 @@ namespace Ex02_Othelo
                         if (LegalMove(i_Player, checkPoint, eOnlyCheck.Yes))
                         {
                             moveResult = true;
-                        }
-
-                        if (i_Player.PlayerType.Equals(eUserType.Computer))
-                        {
-                            m_LegalMovesForComputer.Add(checkPoint);
-                        }
+                            if (i_Player.PlayerType.Equals(eUserType.Computer))
+                            {
+                                m_LegalMovesForComputer.Add(checkPoint);
+                            }
+                        }   
                     }
                 }
             }
@@ -75,49 +74,8 @@ namespace Ex02_Othelo
             return moveResult;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="i_Player"></param>
-        /// <returns></returns>
-        //public bool ThereIsExisitingLegalMoveComputer(Player i_Player)
-        //{
-        //    bool moveResult = false;
-        //    m_LegalMovesForComputer.Clear();
-        //    for (int i = 1; i < m_Board.Boardsize - 1; i++)
-        //    {
-        //        for (int j = 1; j < m_Board.Boardsize - 1; j++)
-        //        {
-        //            if (m_Board.CellOnBoardByLocation(i, j).SignValue == (char)eGameSigns.None)
-        //            {
-        //                Point checkPoint = new Point(i, j);
-
-        //                if (LegalMove(i_Player, checkPoint, eOnlyCheck.Yes))
-        //                {
-        //                    moveResult = true;
-        //                }
-
-        //                if (i_Player.PlayerType.Equals(eUserType.Computer))
-        //                {
-        //                    m_LegalMovesForComputer.Add(checkPoint);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    if (i_Player.PlayerType.Equals(eUserType.Computer))
-        //    {
-        //        moveResult = m_LegalMovesForComputer.Count > 0;
-        //    }
-
-        //    return moveResult;
-        //}
-
-
         public bool LegalMove(Player i_Player)
         {
-            ////
-            //  ThereIsExisitingLegalMoveComputer(i_Player);
             bool moveResult = false;
             Point randomPoint = m_LegalMovesForComputer[m_RandomGenerator.Next(m_LegalMovesForComputer.Count)];
             moveResult = LegalMove(i_Player, randomPoint, eOnlyCheck.No);

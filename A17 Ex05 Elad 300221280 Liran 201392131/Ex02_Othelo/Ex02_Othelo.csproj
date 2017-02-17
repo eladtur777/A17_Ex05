@@ -42,7 +42,6 @@
     <Compile Include="eBoardSize.cs" />
     <Compile Include="eGameMenu.cs" />
     <Compile Include="eOnlyCheck.cs" />
-    <Compile Include="EnumLettersToNumbers.cs" />
     <Compile Include="eGameSigns.cs" />
     <Compile Include="eDirections.cs" />
     <Compile Include="GameModel.cs" />
@@ -53,7 +52,6 @@
     </Compile>
     <Compile Include="Player.cs" />
     <Compile Include="eUserType.cs" />
-    <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
