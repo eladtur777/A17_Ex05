@@ -212,20 +212,25 @@ namespace Ex05.OtheloUI
             {
                 this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
                 //   this.computerTurn(i_PictureBox);
-                this.secondPlayerTurn(i_PictureBox); 
+           
+                this.secondPlayerTurn(i_PictureBox);
             }
         }
 
         private void secondPlayerTurn(PictureBox i_PictureBox)
         {
-            //char[] playerInput = { ' ', ',', ' ' };
-            //string[] coordinates = i_PictureBox.Name.Split(playerInput);
-          //  this.clearLegalityMovesList();
+           
             if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
             {
-                this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer);
+                this.clearLegalityMovesList();
+                if (m_GameModel.ThereIsExisitingLegalMove(m_GameModel.SecondPlayer))
+                {
+                    this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer);
+                }
+               // this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer);
                 this.player1Turn = true;
                 this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
+                this.Show();
             }
             else
             {
@@ -236,6 +241,7 @@ namespace Ex05.OtheloUI
                 this.player1Turn = true;
                 this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
             }
+
         }
 
         //private void computerTurn(PictureBox i_PictureBox)
