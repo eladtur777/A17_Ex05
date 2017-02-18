@@ -5,7 +5,6 @@ using System.Text;
 using System.Windows.Forms;
 using Ex02_Othelo;
 using System.Diagnostics;
-
 namespace Ex05.OtheloUI
 {
     public partial class Game : Form
@@ -22,6 +21,7 @@ namespace Ex05.OtheloUI
         private Panel panel1;
         private List<PictureBox> m_ListOfLegalityBoardPictureBox = new List<PictureBox>();
         private Timer m_Timer = new Timer();
+        private int m_Ticks = 0;
 
         public Game()
         {
@@ -34,6 +34,9 @@ namespace Ex05.OtheloUI
             this.m_GameModel.TrnsferingLegalityCellOption += this.updateLegalityOptionOnPicturBox;
             this.callTheWinner = new StringBuilder();
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
+          //  m_Timer.Interval = (2000);
+          ////  m_Timer.Tick += new EventHandler(CheckTicks);
+          //  m_Timer.Enabled = true;
         }
 
         private void InitializeComponent()
@@ -191,11 +194,13 @@ namespace Ex05.OtheloUI
                                 this.computerTurn();
                                 this.playerTurn = true;
                                 this.m_GameModel.ThereIsExisitingLegalMove(this.m_GameModel.FirstPlayer);
+                              //  this.panel1.Enabled = true;
                             }
                         }
                     }
 
                     this.Show();
+                    this.panel1.Enabled = true;
                 }
                 else
                 {
@@ -235,17 +240,13 @@ namespace Ex05.OtheloUI
 
             if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
             {
-                this.panel1.Enabled =false;
-                m_Timer.Interval = (1000);
-                m_Timer.Tick += new EventHandler(timerTick);
-                m_Timer.Enabled = true;
-                m_Timer.Start();
+                this.panel1.Enabled = false;
 
                 if (this.m_GameModel.ThereIsExisitingLegalMove(this.m_GameModel.SecondPlayer))
-                    {
+                {
                         this.computerTurn();
                 }
-
+       
                 this.playerTurn = true;
                 this.Show();
 
@@ -265,19 +266,56 @@ namespace Ex05.OtheloUI
 
         private void computerTurn()
         {
-
+            this.panel1.Enabled = false;
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
             this.Show();
+          
+            //m_Timer.Tick += CheckTicks;
+            //m_Timer.Start();
+            //m_Timer.Tick -= CheckTicks;
+            // m_Timer.Tick += CheckTicks;
+            //m_Timer.Start();
+            DateTime currentTime = new DateTime();
+            currentTime = DateTime.Now;
+            DateTime originTime = currentTime;
+            while (currentTime.Second < originTime.Second + 1)
+            {
+
+                currentTime = DateTime.Now;
+
+            }
+           
+
+
+            //   m_Timer = new Timer { Interval = new TimeSpan(0, 0, 2) };
+            //m_Timer.Interval = 2;
+            //m_Timer.Tick += CheckTicks;
+            //m_Timer.Start();
+
+
+
             this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer);
             this.clearLegalityMovesList();
+            this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
         }
 
-        private void timerTick(object sender, EventArgs e)
+       
+
+        private void CheckTicks()
         {
-            this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
-            m_Timer.Stop();
-            this.panel1.Enabled = true;
+            m_Ticks++;
+            if (m_Ticks == 2)
+            {
+                //this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer);
+                //this.clearLegalityMovesList();
+                //this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
+                m_Timer.Stop();
+              
+                this.panel1.Enabled = true;
+            }
         }
+
+
 
         private string[] parserPictureBoxCoordinates(PictureBox i_PictureBox)
         {
