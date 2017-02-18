@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Ex02_Othelo;
-
-namespace Ex05.OtheloUI
+﻿namespace Ex05.OtheloUI
 {
     public class GameController
     {
-        static int m_GameType;
-        static string m_FirstPlayerName;
-        static string m_SecondPlayerName;
-        static int m_BoardSize;
-        static int m_GameRoundFirstPlayerWinner = 0;
-        static int m_GameRoundSecondPlayerWinner = 0;
+        private static int m_GameType;
+        private static string m_FirstPlayerName;
+        private static string m_SecondPlayerName;
+        private static int m_BoardSize;
+        private static int m_GameRoundFirstPlayerWinner = 0;
+        private static int m_GameRoundSecondPlayerWinner = 0;
 
         public static int GameType
         {
@@ -20,6 +15,7 @@ namespace Ex05.OtheloUI
             {
                 return m_GameType;
             }
+
             set
             {
                 m_GameType = value;
@@ -32,6 +28,7 @@ namespace Ex05.OtheloUI
             {
                 return m_GameRoundFirstPlayerWinner;
             }
+
             set
             {
                 m_GameRoundFirstPlayerWinner = value;
@@ -44,6 +41,7 @@ namespace Ex05.OtheloUI
             {
                 return m_GameRoundSecondPlayerWinner;
             }
+
             set
             {
                 m_GameRoundSecondPlayerWinner = value;
@@ -56,6 +54,7 @@ namespace Ex05.OtheloUI
             {
                 return m_FirstPlayerName;
             }
+
             set
             {
                 m_FirstPlayerName = value;
@@ -68,6 +67,7 @@ namespace Ex05.OtheloUI
             {
                 return m_SecondPlayerName;
             }
+
             set
             {
                 m_SecondPlayerName = value;
@@ -80,6 +80,7 @@ namespace Ex05.OtheloUI
             {
                 return m_BoardSize;
             }
+
             set
             {
                 m_BoardSize = value;
