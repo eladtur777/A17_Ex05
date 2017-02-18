@@ -5,5 +5,4 @@
         PlayerVsPlayer = 1,
         PlayerVsComputer = 2
     }
-
 }

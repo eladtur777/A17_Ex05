@@ -10,8 +10,10 @@ namespace Ex02_Othelo
         private Board m_Board = null;
         private GameRules m_GameRules = null;
         private StringBuilder m_BoardGame = new StringBuilder();
-        public event DelegateContainer.Updater<char, Point> TrnsferingSignValueUpdate;
-        public event DelegateContainer.Updater<Point> TrnsferingLegalityCellOption;
+
+        public event DelegateContainer.UpdatePictureBoxCellDelegate<char, Point> SignValueTrnsferingFromLogicToUI;
+
+        public event DelegateContainer.UpdateLegalPictureBoxCellDelegate<Point> LegalCellCoordinatesTransferingFromLogicToUI;
 
         public GameModel(int i_BoardSize, string i_FirstPlayerName, string i_SecondPlayerName)
         {
@@ -19,8 +21,8 @@ namespace Ex02_Othelo
             m_SecondPlayer = new Player(i_SecondPlayerName);
             m_Board = new Board(i_BoardSize);
             m_GameRules = new GameRules(ref m_Board);
-            m_GameRules.UpdatingSignValue += listnerForUpdateSignValue;
-            m_GameRules.UpdatingLegalityCellOption += listnerForLegalityCellOption;
+            m_GameRules.UpdatingSignValueFromLogicToUI += listenerForUpdateSignValue_updatingSignValueFromLogicToUI;
+            m_GameRules.UpdatingLegalCellFromLogicToUI += listenerForLegalityCellOption_updatingLegalCellFromLogicToUI;
         }
 
         public bool ThereIsExisitingLegalMove(Player i_player)
@@ -86,29 +88,29 @@ namespace Ex02_Othelo
             }
         }
 
-        private void listnerForUpdateSignValue(char i_PlayerWasher, Point i_Point)
+        private void listenerForUpdateSignValue_updatingSignValueFromLogicToUI(char i_PlayerWasher, Point i_Point)
         {
             onTransferingSignValueUpdate(i_PlayerWasher, i_Point);
         }
 
-        private void listnerForLegalityCellOption(Point i_Point)
+        private void listenerForLegalityCellOption_updatingLegalCellFromLogicToUI(Point i_Point)
         {
             onTrnsferingLegalityCellOption(i_Point);
         }
 
         private void onTransferingSignValueUpdate(char i_PlayerWasher, Point i_Point)
         {
-            if (this.TrnsferingSignValueUpdate != null)
+            if (this.SignValueTrnsferingFromLogicToUI != null)
             {
-                this.TrnsferingSignValueUpdate(i_PlayerWasher, i_Point);
+                this.SignValueTrnsferingFromLogicToUI(i_PlayerWasher, i_Point);
             }
         }
 
         private void onTrnsferingLegalityCellOption(Point i_Point)
         {
-            if (this.TrnsferingLegalityCellOption != null)
+            if (this.LegalCellCoordinatesTransferingFromLogicToUI != null)
             {
-                this.TrnsferingLegalityCellOption(i_Point);
+                this.LegalCellCoordinatesTransferingFromLogicToUI(i_Point);
             }
         }
     }

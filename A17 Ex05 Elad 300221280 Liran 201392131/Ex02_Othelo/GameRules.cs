@@ -12,9 +12,9 @@ namespace Ex02_Othelo
         private List<Point> m_LegalMovesForComputer = new List<Point>();
         private List<int> m_ScoreList = new List<int>();
 
-        public event DelegateContainer.Updater<char, Point> UpdatingSignValue;
+        public event DelegateContainer.UpdatePictureBoxCellDelegate<char, Point> UpdatingSignValueFromLogicToUI;
 
-        public event DelegateContainer.Updater<Point> UpdatingLegalityCellOption;
+        public event DelegateContainer.UpdateLegalPictureBoxCellDelegate<Point> UpdatingLegalCellFromLogicToUI;
 
         public GameRules(ref Board io_Board)
         {
@@ -145,7 +145,7 @@ namespace Ex02_Othelo
                 {
                     copyPoint = RecoverPreviousPointValue(copyPoint, i_Rule);
                     m_Board.UpdateSignCellOnBoardByPoint(i_Player.PlayerWasher, copyPoint);
-                    OnUpdateCellSignValue(i_Player.PlayerWasher, copyPoint);
+                    onUpdateCellSignValue(i_Player.PlayerWasher, copyPoint);
                 }
             }
             else if (moveResult && i_Mode == eOnlyCheck.Yes)
@@ -155,7 +155,7 @@ namespace Ex02_Othelo
                     copyPoint = RecoverPreviousPointValue(copyPoint, i_Rule);
                 }
 
-                OnUpdateCellOption(copyPoint);
+                onUpdateLegalCell(copyPoint);
             }
 
             return moveResult;
@@ -325,19 +325,19 @@ namespace Ex02_Othelo
             }
         }
 
-        private void OnUpdateCellSignValue(char i_PlayerWasher, Point i_Point)
+        private void onUpdateCellSignValue(char i_PlayerWasher, Point i_Point)
         {
-            if (this.UpdatingSignValue != null)
+            if (this.UpdatingSignValueFromLogicToUI != null)
             {
-                this.UpdatingSignValue(i_PlayerWasher, i_Point);
+                this.UpdatingSignValueFromLogicToUI(i_PlayerWasher, i_Point);
             }
         }
 
-        private void OnUpdateCellOption(Point i_Point)
+        private void onUpdateLegalCell(Point i_Point)
         {
-            if (this.UpdatingLegalityCellOption != null)
+            if (this.UpdatingLegalCellFromLogicToUI != null)
             {
-                this.UpdatingLegalityCellOption(i_Point);
+                this.UpdatingLegalCellFromLogicToUI(i_Point);
             }
         }
     }
