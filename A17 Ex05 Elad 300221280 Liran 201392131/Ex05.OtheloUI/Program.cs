@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Ex05.OtheloUI
+﻿namespace Ex05.OtheloUI
 {
-    class Program
+    public class Program
     {
         public static void Main()
         {
