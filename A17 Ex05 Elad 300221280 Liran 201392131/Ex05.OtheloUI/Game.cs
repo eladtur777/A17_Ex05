@@ -33,20 +33,28 @@ namespace Ex05.OtheloUI
             this.m_GameModel.TrnsferingLegalityCellOption += this.updateLegalityOptionOnPicturBox;
             this.callTheWinner = new StringBuilder();
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
+            ////Timer will tick evert second
+            this.m_Timer.Interval = 1000 * 1;
+            ////Enable the timer
+            this.m_Timer.Enabled = true;
+            ////Start the timer
+            this.m_Timer.Start();
         }
 
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            //// 
-            ////panel1
-            //// 
+            // 
+            // panel1
+            // 
             this.panel1.Location = new System.Drawing.Point(6, 6);
             this.panel1.Name = "panel1";
-            //// 
-            //// Game
-            //// 
+            this.panel1.Size = new System.Drawing.Size(200, 100);
+            this.panel1.TabIndex = 0;
+            // 
+            // Game
+            // 
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(284, 261);
@@ -59,12 +67,6 @@ namespace Ex05.OtheloUI
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.gameLoad);
             this.ResumeLayout(false);
-            ////Timer will tick evert second
-            this.m_Timer.Interval = 1000 * 1;
-            ////Enable the timer
-            this.m_Timer.Enabled = true;
-            ////Start the timer
-            this.m_Timer.Start();                       
         }
 
         private void buildBoard()
@@ -122,18 +124,22 @@ namespace Ex05.OtheloUI
             {
                 case (int)eBoardSize.Six:
                     this.ClientSize = new System.Drawing.Size(400, 400);
+                    this.Location = new System.Drawing.Point((Screen.PrimaryScreen.Bounds.Size.Width / 2) - (this.Size.Width / 2), (Screen.PrimaryScreen.Bounds.Size.Height / 2) - (this.Size.Height / 2));
                     this.panel1.Size = new System.Drawing.Size(395, 395);
                     break;
                 case (int)eBoardSize.Eight:
                     this.ClientSize = new System.Drawing.Size(530, 530);
+                    this.Location = new System.Drawing.Point((Screen.PrimaryScreen.Bounds.Size.Width / 2) - (this.Size.Width / 2), (Screen.PrimaryScreen.Bounds.Size.Height / 2) - (this.Size.Height / 2));
                     this.panel1.Size = new System.Drawing.Size(525, 525);
                     break;
                 case (int)eBoardSize.Ten:
                     this.ClientSize = new System.Drawing.Size(660, 660);
+                    this.Location = new System.Drawing.Point((Screen.PrimaryScreen.Bounds.Size.Width / 2) - (this.Size.Width / 2), (Screen.PrimaryScreen.Bounds.Size.Height / 2) - (this.Size.Height / 2));
                     this.panel1.Size = new System.Drawing.Size(655, 655);
                     break;
                 case (int)eBoardSize.Twelve:
                     this.ClientSize = new System.Drawing.Size(790, 790);
+                    this.Location = new System.Drawing.Point((Screen.PrimaryScreen.Bounds.Size.Width / 2) - (this.Size.Width / 2), (Screen.PrimaryScreen.Bounds.Size.Height / 2) - (this.Size.Height / 2));
                     this.panel1.Size = new System.Drawing.Size(785, 785);
                     break;
             }

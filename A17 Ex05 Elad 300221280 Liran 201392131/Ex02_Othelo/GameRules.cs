@@ -11,7 +11,9 @@ namespace Ex02_Othelo
         private Random m_RandomGenerator = new Random();
         private List<Point> m_LegalMovesForComputer = new List<Point>();
         private List<int> m_ScoreList = new List<int>();
+
         public event DelegateContainer.Updater<char, Point> UpdatingSignValue;
+
         public event DelegateContainer.Updater<Point> UpdatingLegalityCellOption;
 
         public GameRules(ref Board io_Board)
@@ -152,6 +154,7 @@ namespace Ex02_Othelo
                 {
                     copyPoint = RecoverPreviousPointValue(copyPoint, i_Rule);
                 }
+
                 OnUpdateCellOption(copyPoint);
             }
 

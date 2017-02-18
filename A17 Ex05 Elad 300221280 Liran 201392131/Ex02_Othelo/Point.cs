@@ -54,6 +54,7 @@
 
             return f_result;
         }
+
         public int AxisXValue
         {
             get

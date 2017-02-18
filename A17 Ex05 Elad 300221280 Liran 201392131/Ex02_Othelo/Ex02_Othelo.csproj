@@ -46,7 +46,6 @@
     <Compile Include="eDirections.cs" />
     <Compile Include="GameModel.cs" />
     <Compile Include="Point.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="GameRules.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
