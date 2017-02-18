@@ -15,13 +15,12 @@ namespace Ex05.OtheloUI
         private PictureBox[,] pictureBoxArray;
         private GameModel m_GameModel;
         private Ex02_Othelo.Point m_PointForMouseHoverAndLeave;
-        private bool playerTurn = true;
+        private bool IsFirstPlayerTurn = true;
         private StringBuilder callTheWinner;
         private System.Drawing.Point pictureLocation;
-        private Panel panel1;
+        private Panel pictureBoxPanel;
         private List<PictureBox> m_ListOfLegalityBoardPictureBox = new List<PictureBox>();
-        private Timer m_Timer = new Timer();
-        private int m_Ticks = 0;
+        DateTime currentTime = new DateTime();
 
         public Game()
         {
@@ -34,29 +33,20 @@ namespace Ex05.OtheloUI
             this.m_GameModel.TrnsferingLegalityCellOption += this.updateLegalityOptionOnPicturBox;
             this.callTheWinner = new StringBuilder();
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
-          //  m_Timer.Interval = (2000);
-          ////  m_Timer.Tick += new EventHandler(CheckTicks);
-          //  m_Timer.Enabled = true;
         }
 
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBoxPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.Location = new System.Drawing.Point(6, 6);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 100);
-            this.panel1.TabIndex = 0;
-            // 
-            // Game
-            // 
+            this.pictureBoxPanel.Location = new System.Drawing.Point(6, 6);
+            this.pictureBoxPanel.Name = "panel1";
+            this.pictureBoxPanel.Size = new System.Drawing.Size(200, 100);
+            this.pictureBoxPanel.TabIndex = 0;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pictureBoxPanel);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Game";
@@ -82,7 +72,7 @@ namespace Ex05.OtheloUI
                         this.pictureBoxArray[i, j].Location = this.pictureLocation;
                         this.pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
                         this.pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
-                        this.panel1.Controls.Add(this.pictureBoxArray[i, j]);
+                        this.pictureBoxPanel.Controls.Add(this.pictureBoxArray[i, j]);
                     }
 
                     if (this.m_GameModel.Board.CellBoard[i, j].SignValue == (char)eGameSigns.O)
@@ -94,7 +84,7 @@ namespace Ex05.OtheloUI
                         this.pictureBoxArray[i, j].Location = this.pictureLocation;
                         this.pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
                         this.pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
-                        this.panel1.Controls.Add(this.pictureBoxArray[i, j]);
+                        this.pictureBoxPanel.Controls.Add(this.pictureBoxArray[i, j]);
                     }
                     else if (this.m_GameModel.Board.CellBoard[i, j].SignValue == (char)eGameSigns.None)
                     {
@@ -107,7 +97,7 @@ namespace Ex05.OtheloUI
                         this.pictureLocation.X += k_PictureBoxArea + k_SpaceBetweenPictures;
                         this.pictureBoxArray[i, j].Size = new Size(k_PictureBoxArea, k_PictureBoxArea);
                         this.pictureBoxArray[i, j].Click += new EventHandler(this.pictureBox_Mouseclick);
-                        this.panel1.Controls.Add(this.pictureBoxArray[i, j]);
+                        this.pictureBoxPanel.Controls.Add(this.pictureBoxArray[i, j]);
                     }
                 }
 
@@ -123,22 +113,22 @@ namespace Ex05.OtheloUI
                 case (int)eBoardSize.Six:
                     this.ClientSize = new System.Drawing.Size(400, 400);
                     this.Location = new System.Drawing.Point((Screen.PrimaryScreen.Bounds.Size.Width / 2) - (this.Size.Width / 2), (Screen.PrimaryScreen.Bounds.Size.Height / 2) - (this.Size.Height / 2));
-                    this.panel1.Size = new System.Drawing.Size(395, 395);
+                    this.pictureBoxPanel.Size = new System.Drawing.Size(395, 395);
                     break;
                 case (int)eBoardSize.Eight:
                     this.ClientSize = new System.Drawing.Size(530, 530);
                     this.Location = new System.Drawing.Point((Screen.PrimaryScreen.Bounds.Size.Width / 2) - (this.Size.Width / 2), (Screen.PrimaryScreen.Bounds.Size.Height / 2) - (this.Size.Height / 2));
-                    this.panel1.Size = new System.Drawing.Size(525, 525);
+                    this.pictureBoxPanel.Size = new System.Drawing.Size(525, 525);
                     break;
                 case (int)eBoardSize.Ten:
                     this.ClientSize = new System.Drawing.Size(660, 660);
                     this.Location = new System.Drawing.Point((Screen.PrimaryScreen.Bounds.Size.Width / 2) - (this.Size.Width / 2), (Screen.PrimaryScreen.Bounds.Size.Height / 2) - (this.Size.Height / 2));
-                    this.panel1.Size = new System.Drawing.Size(655, 655);
+                    this.pictureBoxPanel.Size = new System.Drawing.Size(655, 655);
                     break;
                 case (int)eBoardSize.Twelve:
                     this.ClientSize = new System.Drawing.Size(790, 790);
                     this.Location = new System.Drawing.Point((Screen.PrimaryScreen.Bounds.Size.Width / 2) - (this.Size.Width / 2), (Screen.PrimaryScreen.Bounds.Size.Height / 2) - (this.Size.Height / 2));
-                    this.panel1.Size = new System.Drawing.Size(785, 785);
+                    this.pictureBoxPanel.Size = new System.Drawing.Size(785, 785);
                     break;
             }
 
@@ -161,7 +151,7 @@ namespace Ex05.OtheloUI
             PictureBox pictureBox = (PictureBox)sender;
             if (this.m_ListOfLegalityBoardPictureBox.Contains(pictureBox))
             {
-                if (this.playerTurn)
+                if (this.IsFirstPlayerTurn)
                 {
                     this.firstPlayerTurn(pictureBox);
                     if (GameController.GameType == (int)eGameMenu.PlayerVsPlayer)
@@ -174,10 +164,10 @@ namespace Ex05.OtheloUI
                             }
                             else
                             {
-                                this.playerTurn = true;
+                                this.IsFirstPlayerTurn = true;
+                                MessageBox.Show(string.Format("No legals move for {0}", this.m_GameModel.SecondPlayer.PlayerName));
                             }
 
-                            MessageBox.Show(string.Format("No legals mooves for {0}", this.m_GameModel.SecondPlayer.PlayerName));
                             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
                         }
                     }
@@ -192,15 +182,14 @@ namespace Ex05.OtheloUI
                             else
                             {
                                 this.computerTurn();
-                                this.playerTurn = true;
+                                this.IsFirstPlayerTurn = true;
                                 this.m_GameModel.ThereIsExisitingLegalMove(this.m_GameModel.FirstPlayer);
-                              //  this.panel1.Enabled = true;
                             }
                         }
                     }
 
                     this.Show();
-                    this.panel1.Enabled = true;
+                    this.pictureBoxPanel.Enabled = true;
                 }
                 else
                 {
@@ -214,19 +203,15 @@ namespace Ex05.OtheloUI
                         }
                         else
                         {
-                            this.playerTurn = false;
+                            this.IsFirstPlayerTurn = false;
+                            MessageBox.Show(string.Format("No legals move for {0}", this.m_GameModel.FirstPlayer.PlayerName));
                         }
 
-                        MessageBox.Show(string.Format("No legals mooves for {0}", this.m_GameModel.FirstPlayer.PlayerName));
                         this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
                     }
-
+  
                     this.Show();
                 }
-            }
-            else
-            {
-               // MessageBox.Show("Please Choose legal moove button (green buttons for possible legal mooves)");
             }
         }
 
@@ -235,87 +220,52 @@ namespace Ex05.OtheloUI
             string[] coordinates = this.parserPictureBoxCoordinates(i_PictureBox);
             this.clearLegalityMovesList();
             this.UpdateBoard(coordinates, this.m_GameModel.FirstPlayer);
-            this.playerTurn = false;
+            this.IsFirstPlayerTurn = false;
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
 
             if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
             {
-                this.panel1.Enabled = false;
+                this.pictureBoxPanel.Enabled = false;
 
                 if (this.m_GameModel.ThereIsExisitingLegalMove(this.m_GameModel.SecondPlayer))
                 {
                         this.computerTurn();
                 }
        
-                this.playerTurn = true;
+                this.IsFirstPlayerTurn = true;
                 this.Show();
-
             }
         }
 
         private void secondPlayerTurn(PictureBox i_PictureBox)
         {
-            {
                 string[] coordinates = this.parserPictureBoxCoordinates(i_PictureBox);
                 this.clearLegalityMovesList();
                 this.UpdateBoard(coordinates, this.m_GameModel.SecondPlayer);
-                this.playerTurn = true;
+                this.IsFirstPlayerTurn = true;
                 this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
-            }
         }
 
         private void computerTurn()
         {
-            this.panel1.Enabled = false;
+            this.pictureBoxPanel.Enabled = false;
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
             this.Show();
-          
-            //m_Timer.Tick += CheckTicks;
-            //m_Timer.Start();
-            //m_Timer.Tick -= CheckTicks;
-            // m_Timer.Tick += CheckTicks;
-            //m_Timer.Start();
-            DateTime currentTime = new DateTime();
-            currentTime = DateTime.Now;
-            DateTime originTime = currentTime;
-            while (currentTime.Second < originTime.Second + 1)
-            {
-
-                currentTime = DateTime.Now;
-
-            }
-           
-
-
-            //   m_Timer = new Timer { Interval = new TimeSpan(0, 0, 2) };
-            //m_Timer.Interval = 2;
-            //m_Timer.Tick += CheckTicks;
-            //m_Timer.Start();
-
-
-
+            suspendTimeOperationBySeconds(200);
             this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer);
             this.clearLegalityMovesList();
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
         }
 
-       
-
-        private void CheckTicks()
+        private void suspendTimeOperationBySeconds(int i_Second)
         {
-            m_Ticks++;
-            if (m_Ticks == 2)
+            currentTime = DateTime.Now;
+            DateTime originTime = currentTime;
+            while (currentTime.Millisecond <= originTime.Millisecond + i_Second)
             {
-                //this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer);
-                //this.clearLegalityMovesList();
-                //this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
-                m_Timer.Stop();
-              
-                this.panel1.Enabled = true;
+                currentTime = DateTime.Now;
             }
         }
-
-
 
         private string[] parserPictureBoxCoordinates(PictureBox i_PictureBox)
         {
@@ -329,7 +279,7 @@ namespace Ex05.OtheloUI
             int countCoordinates = 0;
             int firstCoordinate = 0;
             int secondCoordinate = 0;
-            bool isMooveSucceed = true;
+            bool ismoveucceed = true;
             bool isLegalMove = false;
 
             foreach (string coordinate in i_Coordinate)
@@ -351,10 +301,10 @@ namespace Ex05.OtheloUI
             isLegalMove = this.m_GameModel.LegalMove(i_player, pointToSend, eOnlyCheck.No);
             if (!isLegalMove)
             {
-                isMooveSucceed = false;
+                ismoveucceed = false;
             }
 
-            return isMooveSucceed;
+            return ismoveucceed;
         }
 
         private void updateCoinToPictureBox(char i_SignValue, Ex02_Othelo.Point i_Point)
