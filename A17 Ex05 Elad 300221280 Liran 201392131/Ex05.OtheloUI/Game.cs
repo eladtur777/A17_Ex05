@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Ex02_Othelo;
+using System.Diagnostics;
 
 namespace Ex05.OtheloUI
 {
@@ -33,12 +34,6 @@ namespace Ex05.OtheloUI
             this.m_GameModel.TrnsferingLegalityCellOption += this.updateLegalityOptionOnPicturBox;
             this.callTheWinner = new StringBuilder();
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
-            ////Timer will tick evert second
-            this.m_Timer.Interval = 1000 * 1;
-            ////Enable the timer
-            this.m_Timer.Enabled = true;
-            ////Start the timer
-            this.m_Timer.Start();
         }
 
         private void InitializeComponent()
@@ -240,10 +235,15 @@ namespace Ex05.OtheloUI
 
             if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
             {
+                m_Timer.Interval = (1000);
+                m_Timer.Tick += new EventHandler(timerTick);
+                m_Timer.Enabled = true;
+                m_Timer.Start();
+
                 if (this.m_GameModel.ThereIsExisitingLegalMove(this.m_GameModel.SecondPlayer))
-                {
-                    this.computerTurn();
-                }
+                    {
+                        this.computerTurn();
+                    }
 
                 this.playerTurn = true;
                 this.Show();
@@ -263,11 +263,17 @@ namespace Ex05.OtheloUI
 
         private void computerTurn()
         {
+
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.SecondPlayer.PlayerName);
             this.Show();
             this.m_GameModel.LegalMove(this.m_GameModel.SecondPlayer);
             this.clearLegalityMovesList();
+        }
+
+        private void timerTick(object sender, EventArgs e)
+        {
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
+            m_Timer.Stop();
         }
 
         private string[] parserPictureBoxCoordinates(PictureBox i_PictureBox)
