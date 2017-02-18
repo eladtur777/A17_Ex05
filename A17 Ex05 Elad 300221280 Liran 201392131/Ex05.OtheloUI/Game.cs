@@ -221,7 +221,7 @@ namespace Ex05.OtheloUI
             }
             else
             {
-                MessageBox.Show("Please Choose legal moove button (green buttons for possible legal mooves)");
+               // MessageBox.Show("Please Choose legal moove button (green buttons for possible legal mooves)");
             }
         }
 
@@ -235,6 +235,7 @@ namespace Ex05.OtheloUI
 
             if (GameController.GameType == (int)eGameMenu.PlayerVsComputer)
             {
+                this.panel1.Enabled =false;
                 m_Timer.Interval = (1000);
                 m_Timer.Tick += new EventHandler(timerTick);
                 m_Timer.Enabled = true;
@@ -243,10 +244,11 @@ namespace Ex05.OtheloUI
                 if (this.m_GameModel.ThereIsExisitingLegalMove(this.m_GameModel.SecondPlayer))
                     {
                         this.computerTurn();
-                    }
+                }
 
                 this.playerTurn = true;
                 this.Show();
+
             }
         }
 
@@ -274,6 +276,7 @@ namespace Ex05.OtheloUI
         {
             this.Text = string.Format("Othello - {0} turn", this.m_GameModel.FirstPlayer.PlayerName);
             m_Timer.Stop();
+            this.panel1.Enabled = true;
         }
 
         private string[] parserPictureBoxCoordinates(PictureBox i_PictureBox)
